@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public float moveSpeed = 5.0f;
     public float jumpFoce = 10.0f;
     public ForceMode forcemode = ForceMode.Impulse;
+    public GameManager gameManager;
 
     float h;
     float v;
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
 
     Vector3 moveVec3;
 
+    GameObject scanObject;
     GameObject nearObject;
 
     Rigidbody rigid;
@@ -33,6 +35,7 @@ public class Player : MonoBehaviour
     {
         GetInput();
         Move();
+        Interaction();
         Jump();
     }
 
@@ -71,7 +74,11 @@ public class Player : MonoBehaviour
         anim.SetBool("isWolk", moveVec3 != Vector3.zero);
         anim.SetBool("isRun", isRun);        
     }
-
+    void Interaction()
+    {
+        if (eDown)
+            gameManager.Action(scanObject);
+    }
    void ChangeInteraction()
     {
         isInteraction = !isInteraction;
@@ -87,6 +94,8 @@ public class Player : MonoBehaviour
             if (Input.GetButtonDown("Interaction")) anim.SetTrigger("Interaction");
             Debug.Log("Item Search");
         }
+        else
+            scanObject = other.gameObject;
     }
 
     void OnTriggerExit(Collider other)

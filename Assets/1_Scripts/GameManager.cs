@@ -11,12 +11,14 @@ public class GameManager : MonoBehaviour
     public Text talkText;
     public int talkIndex = 0;
     public bool isAction;
+
     public void Action(GameObject scanObj)
     {
         isAction = true;
         scanObject = scanObj;
-        ObjectData objData = scanObject.GetComponent<ObjectData>();
-        Talk(objData.id, objData.isNpc);
+        talkText.text = scanObj.name;
+        //ObjectData objData = scanObject.GetComponent<ObjectData>();
+        //Talk(objData.id, objData.isNpc);
     }
 
     void Talk(int id, bool isNpc)

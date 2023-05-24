@@ -41,8 +41,8 @@ public class Player : MonoBehaviour
 
     void GetInput()
     {
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
+        h = gameManager.isAction ? 0 : Input.GetAxisRaw("Horizontal");
+        v = gameManager.isAction ? 0 : Input.GetAxisRaw("Vertical");
 
         eDown = Input.GetButtonDown("Interaction");
     }
@@ -77,12 +77,13 @@ public class Player : MonoBehaviour
     void Interaction()
     {
         if (eDown)
+        {
             gameManager.Action(scanObject);
+        }
     }
    void ChangeInteraction()
     {
         isInteraction = !isInteraction;
-        Debug.Log("ChangeInteraction »£√‚!");
     }
 
     void OnTriggerStay(Collider other)
@@ -92,7 +93,6 @@ public class Player : MonoBehaviour
             nearObject = other.gameObject;
 
             if (Input.GetButtonDown("Interaction")) anim.SetTrigger("Interaction");
-            Debug.Log("Item Search");
         }
         else
             scanObject = other.gameObject;
@@ -102,8 +102,6 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "Item")
             nearObject = null;
-
-        Debug.Log("Item exit");
     }
 
 }

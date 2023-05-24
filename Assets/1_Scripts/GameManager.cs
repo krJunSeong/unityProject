@@ -9,41 +9,42 @@ public class GameManager : MonoBehaviour
     public TalkManager talkManager;
     public GameObject scanObject;
     public Text talkText;
+    public GameObject talkPanel;
+    public Image portraitImg;
     public int talkIndex = 0;
     public bool isAction;
 
     public void Action(GameObject scanObj)
     {
-        isAction = true;
-        scanObject = scanObj;
-        talkText.text = scanObj.name;
-        //ObjectData objData = scanObject.GetComponent<ObjectData>();
-        //Talk(objData.id, objData.isNpc);
+        talkPanel.SetActive(true);
+        ObjectData objData = scanObj.GetComponent<ObjectData>();
+        Talk(objData.id, objData.isNpc);
     }
 
     void Talk(int id, bool isNpc)
     {
         string talkData = talkManager.GetTalk(id, talkIndex);
-
         if(talkData == null)
         {
-            isAction = false;
+            talkPanel.SetActive(false);
             talkIndex = 0;
+            isAction = false;
             return;
         }
 
         if(isNpc)
         {
             talkText.text = talkData;
+            portraitImg.color = new Color(1, 1, 1, 1);
         }
         else
         {
             talkText.text = talkData;
+            portraitImg.color = new Color(1, 1, 1, 0);
         }
-
         isAction = true;
         talkIndex++;
 
-        int questTalkIndex = questManager.GetQuestTalkIndex(id);
+        //int questTalkIndex = questManager.GetQuestTalkIndex(id);
     }
 }

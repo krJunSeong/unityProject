@@ -22,12 +22,14 @@ public class GameManager : MonoBehaviour
 
     void Talk(int id, bool isNpc)
     {
-        string talkData = talkManager.GetTalk(id, talkIndex);
+        int questTalkIndex = questManager.GetQuestTalkIndex(id);
+        string talkData = talkManager.GetTalk(id + questTalkIndex, talkIndex);
         if(talkData == null)
         {
             talkPanel.SetActive(false);
             talkIndex = 0;
             isAction = false;
+            questManager.CheckQuest(id);
             return;
         }
 

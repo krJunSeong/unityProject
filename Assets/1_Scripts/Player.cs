@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     Vector3 moveVec3;
 
     GameObject scanObject;
+
+    [SerializeField]
     GameObject nearObject;
 
     Rigidbody rigid;
@@ -78,12 +80,17 @@ public class Player : MonoBehaviour
     {
         if (eDown)
         {
-            gameManager.Action(scanObject);
+            gameManager.TalkAction(scanObject);
         }
     }
    void ChangeInteraction()
     {
         isInteraction = !isInteraction;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        
     }
 
     void OnTriggerStay(Collider other)

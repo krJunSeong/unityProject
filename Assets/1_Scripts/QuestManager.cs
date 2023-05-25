@@ -18,7 +18,6 @@ public class QuestManager : MonoBehaviour
     void GenerateData()
     {
         questList.Add(1000, new QuestData("첫 마을 방문", new int[] { 1000, 2000 }));
-
     }
 
     public int GetQuestTalkIndex(int id)

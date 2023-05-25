@@ -14,9 +14,8 @@ public class GameManager : MonoBehaviour
     public int talkIndex = 0;
     public bool isAction;
 
-    public void Action(GameObject scanObj)
+    public void TalkAction(GameObject scanObj)
     {
-        talkPanel.SetActive(true);
         ObjectData objData = scanObj.GetComponent<ObjectData>();
         Talk(objData.id, objData.isNpc);
     }
@@ -42,8 +41,10 @@ public class GameManager : MonoBehaviour
         else
         {
             talkText.text = talkData;
+
             portraitImg.color = new Color(1, 1, 1, 0);
         }
+        talkPanel.SetActive(true);
         isAction = true;
         talkIndex++;
 

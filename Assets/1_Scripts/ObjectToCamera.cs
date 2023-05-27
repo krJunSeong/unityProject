@@ -34,8 +34,11 @@ public class ObjectToCamera : MonoBehaviour
         Vector3 moveDir = forwardRelative + rightRelative;
 
         // movement
-        rb.velocity = new Vector3(moveDir.x, rb.velocity.y, moveDir.z);
+        //1.
+        // rb.velocity = new Vector3(moveDir.x, rb.velocity.y, moveDir.z);
 
+        //2.
+        //rb.MovePosition(transform.position + moveDir.normalized * Time.deltaTime);
         transform.forward = new Vector3(moveDir.x, 0, moveDir.z);
     }
 }

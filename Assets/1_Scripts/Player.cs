@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -72,6 +70,7 @@ public class Player : MonoBehaviour
         transform.position += moveVec3;
 
         transform.LookAt(transform.position + moveVec3);
+        // ´ë¾È: rigidbody.velocity = moveVec3
 
         anim.SetBool("isWolk", moveVec3 != Vector3.zero);
         anim.SetBool("isRun", isRun);        

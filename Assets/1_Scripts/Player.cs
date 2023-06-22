@@ -2,11 +2,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
-    public float jumpFoce = 10.0f;
-    public ForceMode forcemode = ForceMode.Impulse;
-    public GameManager gameManager;
+    // -------------------
+    private float moveSpeed = 0.0f;
+    private float walkSpeed = 5.0f;
+    private float runSpeed = 10.0f;
+    private float jumpFoce = 10.0f;
+    private ForceMode forcemode = ForceMode.Impulse;
 
+
+    // ---------------- input -------------
     float h;
     float v;
 
@@ -16,6 +20,11 @@ public class Player : MonoBehaviour
 
     Vector3 moveVec3;
 
+    // -----------------------------------------
+    [SerializeField]
+    public GameManager gameManager;
+
+    [SerializeField]
     GameObject scanObject;
 
     [SerializeField]
@@ -37,6 +46,17 @@ public class Player : MonoBehaviour
         Move();
         Interaction();
         Jump();
+    }
+
+    private void FixedUpdate()
+    {
+        //transform.position += moveVec3;
+        //transform.LookAt(transform.position + moveVec3);
+
+        rigid.MovePosition(rigid.position + moveVec3 * moveSpeed * Time.deltaTime);
+
+        if(new Vector3(h,0,v).normalized.magnitude > 0)
+            rigid.MoveRotation(Quaternion.Slerp(rigid.rotation, Quaternion.LookRotation(moveVec3), 0.3f));
     }
 
     void GetInput()
@@ -63,14 +83,10 @@ public class Player : MonoBehaviour
 
         isRun = Input.GetButton("Run");
 
-        if (isRun) moveSpeed = 7.0f;
-        else moveSpeed = 5.0f;
+        moveSpeed = isRun? runSpeed : walkSpeed;
 
-        moveVec3 = new Vector3(h, 0, v).normalized * moveSpeed * Time.deltaTime;
-        transform.position += moveVec3;
+        moveVec3 = new Vector3(h, 0, v).normalized;
 
-        transform.LookAt(transform.position + moveVec3);
-        // ´ë¾È: rigidbody.velocity = moveVec3
 
         anim.SetBool("isWolk", moveVec3 != Vector3.zero);
         anim.SetBool("isRun", isRun);        

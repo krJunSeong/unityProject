@@ -53,6 +53,8 @@ public class Player : MonoBehaviour
         //transform.position += moveVec3;
         //transform.LookAt(transform.position + moveVec3);
 
+        //transform.position += moveVec3 * moveSpeed * Time.deltaTime;
+        moveVec3 = new Vector3(h, 0, v).normalized;
         rigid.MovePosition(rigid.position + moveVec3 * moveSpeed * Time.deltaTime);
 
         if(new Vector3(h,0,v).normalized.magnitude > 0)
@@ -84,9 +86,6 @@ public class Player : MonoBehaviour
         isRun = Input.GetButton("Run");
 
         moveSpeed = isRun? runSpeed : walkSpeed;
-
-        moveVec3 = new Vector3(h, 0, v).normalized;
-
 
         anim.SetBool("isWolk", moveVec3 != Vector3.zero);
         anim.SetBool("isRun", isRun);        

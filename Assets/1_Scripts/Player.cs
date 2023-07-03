@@ -85,7 +85,14 @@ public class Player : MonoBehaviour
 
         isRun = Input.GetButton("Run");
 
-        moveSpeed = isRun? runSpeed : walkSpeed;
+        if (isRun) moveSpeed = 7.0f;
+        else moveSpeed = 5.0f;
+
+        moveVec3 = new Vector3(h, 0, v).normalized * moveSpeed * Time.deltaTime;
+        rigid.MovePosition(rigid.position + moveVec3);
+
+        transform.LookAt(transform.position + moveVec3);
+        // ´ë¾È: rigidbody.velocity = moveVec3
 
         anim.SetBool("isWolk", moveVec3 != Vector3.zero);
         anim.SetBool("isRun", isRun);        

@@ -1,0 +1,5 @@
+Key,Name,Path
+10000,book,9_Assetes/RPG_inventory_icons/book
+20000,apple,9_Assetes/RPG_inventory_icons/apple
+30000,meat,9_Assetes/RPG_inventory_icons/Meat
+40000,kick,/___/___/___

@@ -4,20 +4,30 @@ using UnityEngine;
 
 using UnityEngine.UI;
 
+public struct ItemDatas
+{
+    string key;
+    string name;
+    string path;
+
+    public void Set(string a, string b, string c) { key = a; name = b; path = c; }
+}
 public class Slot : MonoBehaviour
 {
     public Image slotImg = null;
     Item itemData;
 
+    List<ItemDatas> itemDatas; // 딕셔너리<네임>으로 바꿀 것
+
     public Sprite testImg = null;
+    private bool nowUsing;
     
     void Start()
     {
         //slotItem = transform.GetChild(0).gameObject;
         //slotItem.GetComponent<GameObject>();
         slotImg = transform.Find("slotItem")?.GetComponent<Image>();
-
-        
+        LoadItemTextData();
     }
 
     void Update()
@@ -37,6 +47,28 @@ public class Slot : MonoBehaviour
     {
         itemData = i;
     }
+    void LoadItemTextData() //데이터화 시켜서 불러옴
+    {
+        TextAsset textAsset = Resources.Load<TextAsset>("TextData/ItemData");
+
+        string temp = textAsset.text.Replace("\r\n", "\n");
+        string[] row = temp.Split('\n');
+
+        for (int i = 1; i < row.Length; i++)
+        {
+            string[] data = row[i].Split(',');
+
+            if (data.Length <= 1) continue;
+
+            ItemDatas _itemData = new ItemDatas();
+
+            _itemData.Set(data[0], data[1], data[2]);
+
+            itemDatas.Add(_itemData);
+        }
+    }
+
+    public bool GetNowUsing() { return nowUsing; }
 }
 
 /*

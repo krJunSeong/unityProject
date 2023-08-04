@@ -27,17 +27,13 @@ public class Slot : MonoBehaviour
         //slotItem = transform.GetChild(0).gameObject;
         //slotItem.GetComponent<GameObject>();
         slotImg = transform.Find("slotItem")?.GetComponent<Image>();
-
         LoadItemTextData();
-
-        itemData = Resources.Load<Item>("testFolder/bookData");
-        testImg = itemData.itemImage;
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
-            ChangeItemImage(itemData?.itemImage);
+            ChangeItemImage(itemData.itemImage);
 
         if (Input.GetKeyDown(KeyCode.F2))
             ChangeItemImage(testImg);

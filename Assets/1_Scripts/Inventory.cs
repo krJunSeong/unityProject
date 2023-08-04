@@ -27,7 +27,7 @@ public class Inventory : MonoBehaviour
             {
                 // 1.해당 빈자리에 아이템 넣어주기.
                 Debug.Log("빈 자리가 있습니다.");
-                slot
+
                 return;
             }
         }

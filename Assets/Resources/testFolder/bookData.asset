@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca16229ddccd4d94bb8cd5775428fcda, type: 3}
-  m_Name: ItemData
+  m_Name: bookData
   m_EditorClassIdentifier: 
-  itemCode: 0
-  itemName: testItem0
-  itemImage: {fileID: 0}
+  itemCode: 10000
+  itemName: book
+  itemImage: {fileID: 21300000, guid: ae496f5dad56ea645b72d374a0376368, type: 3}

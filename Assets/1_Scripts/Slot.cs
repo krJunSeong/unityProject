@@ -43,9 +43,9 @@ public class Slot : MonoBehaviour
     {
         slotImg.sprite = img;
     }
-    void GetItem(Item i)
+    void GetItem()
     {
-        itemData = i;
+        // 1. 아이템 넣어주기
     }
     void LoadItemTextData() //데이터화 시켜서 불러옴
     {

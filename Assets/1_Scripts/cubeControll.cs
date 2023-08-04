@@ -12,34 +12,38 @@ public class cubeControll : MonoBehaviour
     public Text text;
     float rotSpeed = 1.0f;
 
+    [SerializeField]
+    List<GameObject> nearObjects;
+
+    Inventory inventory;
+
     void Start()
     {
-        obj = GameObject.Find("SD_Unity-chan").transform;
+        //obj = GameObject.Find("SD_Unity-chan").transform;
     }
 
     void Update()
     {
-
-
-        /*
-            Vector3 vDirecterToTarget = (tfTarget.position - this.transform.position).normalized;
-            vDirecterToTarget.y = 0f;
-
-            // 3번째: 1239
-            transform.rotation = Quaternion.Slerp(transform.rotation,
-                                                  Quaternion.LookRotation(vDirecterToTarget),
-                                                  fRotSpeed * Time.deltaTime);
-        */
-        /*
-        float Dot = Vector3.Dot(transform.forward.normalized, (obj.position - transform.position).normalized);
-
-        float angle = Mathf.Acos(Dot) * Mathf.Rad2Deg;
-        */
-        float angle = Vector3.Angle(transform.forward, (obj.position - transform.position));
-
-        text.text = angle.ToString();
-        Debug.Log(angle);
+        Move();
     }
+
+    void Move()
+    {
+        if (Input.GetKeyDown(KeyCode.W)) transform.Translate(Vector3.forward * 10.0f);
+        if (Input.GetKeyDown(KeyCode.S)) transform.Translate(Vector3.forward * -10.0f);
+        if (Input.GetKeyDown(KeyCode.A)) transform.Translate(Vector3.right * 10.0f);
+        if (Input.GetKeyDown(KeyCode.D)) transform.Translate(Vector3.right * -10.0f);
+
+    }
+    void OnTriggerEnter(Collider other)
+    {
+
+    }
+    void OnTriggerExit(Collider other)
+    {
+
+    }
+
     public static float GetAngle(Vector3 vStart, Vector3 vEnd)
     {
         Vector3 v = vEnd - vStart;
@@ -68,5 +72,27 @@ public class cubeControll : MonoBehaviour
         float Dot = Vector3.Dot(transform.forward.normalized, (obj.position - transform.position).normalized);
 
         float angle = Mathf.Acos(Dot) * Mathf.Rad2Deg;
+    }
+
+    void PreUpdateScript()
+    {
+        /*
+            Vector3 vDirecterToTarget = (tfTarget.position - this.transform.position).normalized;
+            vDirecterToTarget.y = 0f;
+
+            // 3번째: 1239
+            transform.rotation = Quaternion.Slerp(transform.rotation,
+                                                  Quaternion.LookRotation(vDirecterToTarget),
+                                                  fRotSpeed * Time.deltaTime);
+        */
+        /*
+        float Dot = Vector3.Dot(transform.forward.normalized, (obj.position - transform.position).normalized);
+
+        float angle = Mathf.Acos(Dot) * Mathf.Rad2Deg;
+        */
+        float angle = Vector3.Angle(transform.forward, (obj.position - transform.position));
+
+        text.text = angle.ToString();
+        Debug.Log(angle);
     }
 }

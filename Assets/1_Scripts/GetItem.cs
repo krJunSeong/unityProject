@@ -59,6 +59,11 @@ public class GetItem : MonoBehaviour
         {
             inventory.GetItem(nearObjects[0]);
             nearObjects.RemoveAt(0);
+
+            //1. 해당 오브젝트 비활성화
+            //2. 인벤토리: 아이템 획득
+            //              - 카운트, 2D Sprite
+            // 아이템: Name, Information, Assets
         }    
     }
 

@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 2ccee11a0744d404f8ff27d5ca89e216
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Gmarket Sans TTF
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 012692cece1ca83459d9f4e500165361, type: 3}
+  - {fileID: 12800000, guid: a19724ee621484e4ca4b9f081867fa11, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

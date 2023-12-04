@@ -15,4 +15,12 @@ public class MainMenuUIManager : MonoBehaviour
     {
         
     }
+
+    public void GameEnd()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
+    }
 }

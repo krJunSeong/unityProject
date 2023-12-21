@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class LoadingSceneManager : MonoBehaviour
 {
     public static string nextScene;
-    [SerializeField] Image progressBar;
+    [SerializeField] Slider progressBar;
 
     private void Start()
     {
@@ -32,16 +32,16 @@ public class LoadingSceneManager : MonoBehaviour
             timer += Time.deltaTime;
             if (op.progress < 0.9f)
             {
-                progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, op.progress, timer);
-                if (progressBar.fillAmount >= op.progress)
+                progressBar.value = Mathf.Lerp(progressBar.value, op.progress, timer);
+                if (progressBar.value >= op.progress)
                 {
                     timer = 0f;
                 }
             }
             else
             {
-                progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, 1f, timer);
-                if (progressBar.fillAmount == 1.0f)
+                progressBar.value = Mathf.Lerp(progressBar.value, 1f, timer);
+                if (progressBar.value == 1.0f)
                 {
                     op.allowSceneActivation = true;
                     yield break;

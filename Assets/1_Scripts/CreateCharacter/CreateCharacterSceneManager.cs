@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class CreateCharacterSceneManager : MonoBehaviour
 {
     [SerializeField]
+    Transform trfPlayer;
+
+    [SerializeField]
     List<GameObject> lHairBase;
 
     [SerializeField]
@@ -38,7 +41,9 @@ public class CreateCharacterSceneManager : MonoBehaviour
     private int hairNum = 0, hairFrontNum = 0, faceNum = 0,
                 accesorryNum = 0, skinNum = 0;
 
-    void MoveSelection(ref List<GameObject> list, ref int num, Text text, bool b = true)
+    private float rotSpeed = 10.0f;
+
+    void MoveSelection(ref List<GameObject> list, ref int num, Text text, string strName, bool b = true)
     {
         if (b)
         {
@@ -53,43 +58,43 @@ public class CreateCharacterSceneManager : MonoBehaviour
         }
 
         list[num].SetActive(true);
-        text.text = list[num].name;
+        text.text = strName + (num+1).ToString();
     }
 
     public void MoveRightHairSelection()
     {
-        MoveSelection(ref lHairBase, ref hairNum, hairBaseText);
+        MoveSelection(ref lHairBase, ref hairNum, hairBaseText, "머리");
     }
 
     public void MoveLeftHairSelection()
     {
-        MoveSelection(ref lHairBase, ref hairNum, hairBaseText, false);
+        MoveSelection(ref lHairBase, ref hairNum, hairBaseText, "머리", false);
     }
 
     public void MoveRightHairFrontSelection()
     {
-        MoveSelection(ref lHairFront, ref hairFrontNum, hairFrontText);
+        MoveSelection(ref lHairFront, ref hairFrontNum, hairFrontText, "앞머리");
     }
     public void MoveLeftHairFrontSelection()
     {
-        MoveSelection(ref lHairFront, ref hairFrontNum, hairFrontText, false);
+        MoveSelection(ref lHairFront, ref hairFrontNum, hairFrontText, "앞머리", false);
     }
 
     public void MoveRightFaceSelection()
     {
-        MoveSelection(ref lFace, ref faceNum, faceText);
+        MoveSelection(ref lFace, ref faceNum, faceText, "얼굴");
     }
     public void MoveLeftFaceSelection()
     {
-        MoveSelection(ref lFace, ref faceNum, faceText, false);
+        MoveSelection(ref lFace, ref faceNum, faceText, "얼굴", false);
     }
     public void MoveRightAccessorySelection()
     {
-        MoveSelection(ref lAccesary, ref accesorryNum, accesoryText);
+        MoveSelection(ref lAccesary, ref accesorryNum, accesoryText, "장신구");
     }
     public void MoveLeftAccessorySelection()
     {
-        MoveSelection(ref lAccesary, ref accesorryNum, accesoryText,false);
+        MoveSelection(ref lAccesary, ref accesorryNum, accesoryText,"장신구",false);
     }
 
     public void MoveRightSkinSelection()
@@ -97,14 +102,14 @@ public class CreateCharacterSceneManager : MonoBehaviour
         //1. 0 1 2 3 4 5, size = 6, 3
         //2. 0  2  4 6 -2, + 6 = 4
         lSkin[skinNum].SetActive(false);
-        lSkin[skinNum+1].SetActive(false);
+        lSkin[skinNum + 1].SetActive(false);
 
-        skinNum += 2;
-        if (skinNum > lSkin.Count) skinNum %= lSkin.Count;
+        if (skinNum == (lSkin.Count - 2)) skinNum -= (lSkin.Count - 2);
+        else skinNum += 2;
 
         lSkin[skinNum].SetActive(true);
         lSkin[skinNum + 1].SetActive(true);
-        skinText.text = lSkin[skinNum].name;
+        skinText.text = "스킨" + ((skinNum / 2) + 1).ToString();
     }
     public void MoveLeftSkinSelection()
     {
@@ -116,6 +121,17 @@ public class CreateCharacterSceneManager : MonoBehaviour
 
         lSkin[skinNum].SetActive(true);
         lSkin[skinNum + 1].SetActive(true);
-        skinText.text = lSkin[skinNum].name;
+        skinText.text = "스킨" + ((skinNum / 2) + 1).ToString();
+    }
+
+    IEnumerator RotateCharacter()
+    {
+        trfPlayer.Rotate(new Vector3(0, 90, 0) * Time.deltaTime);
+        yield return null;
+    }
+
+    public void StartCorutine(string name)
+    {
+        StartCoroutine(name);
     }
 }

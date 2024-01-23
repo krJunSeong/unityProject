@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class csvReaderTest : MonoBehaviour
 {
@@ -15,6 +16,25 @@ public class csvReaderTest : MonoBehaviour
     {
         
     }
+
+    Dictionary<int, List<string>> LoadData(string path, int startRow)
+    {
+        // path: 경로, col: 열 개수
+        TextAsset textAsset = Resources.Load<TextAsset>(path);
+        string temp = textAsset.text.Replace("\r\n", "\n");
+        string[] row = temp.Split('\n');
+
+        // [Data, Data, Data], [Data, Data, Data]
+        for (int i = 2; i < row.Length; i++)
+        {
+            List<string> data = row[i].Split(',').ToList();
+
+            if (data.Count <= 1) continue;
+        }
+
+        return null;
+    }
+
     void LoadItemTextData() //데이터화 시켜서 불러옴
     {
         TextAsset textAsset = Resources.Load<TextAsset>("TextData/ItemData");

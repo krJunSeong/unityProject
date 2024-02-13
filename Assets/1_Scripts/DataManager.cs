@@ -1,25 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+public class ChatData
+{
+    public string name   {get;}
+    public string image  {get;}
+    public string script {get;}
+
+    public ChatData(string n, string i, string sc)
+    {
+        name = n;
+        image = i;
+        script = sc;
+    }
+}
 
 public class DataManager : MonoBehaviour
 {
-    csvReaderTest csv;
-    List<string> storyData;
+    public static DataManager Instance { get; private set; }
 
-    void Start()
+    [SerializeField] Sprite[] imageMap = new Sprite[30];
+
+    List<ChatData> storyData;
+    Dictionary<int, List<ChatData>> dChapterStoryData { get; set; }
+
+    void Awake()
     {
-        
+        if(Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        dChapterStoryData = csvReaderTest.Instance.LoadChatData("StoryChat");
     }
-    
-    void LoadData()
+
+    public ChatData GetChapterScript(int chapter, int lineNum)
     {
-        csv.load
+        // 같거나 크면 해당 스크립트의 끝
+        if (dChapterStoryData[chapter].Count <= lineNum) return null;
+
+        return dChapterStoryData[chapter][lineNum];
+    }
+
+    public Sprite GetCharacterTalkImage(int num)
+    {
+        return imageMap[num];
     }
 }

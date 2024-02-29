@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        DontDestroyOnLoad(this);
     }
 
     // Update is called once per frame
@@ -63,6 +64,12 @@ public class Player : MonoBehaviour
 
     void GetInput()
     {
+        if (gameManager == null)
+        {
+            Debug.Log("게임매니저가 null 입니다.");
+            return;
+        }
+
         h = gameManager.isAction ? 0 : Input.GetAxisRaw("Horizontal");
         v = gameManager.isAction ? 0 : Input.GetAxisRaw("Vertical");
 

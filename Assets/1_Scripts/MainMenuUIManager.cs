@@ -1,20 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class MainMenuUIManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] Toggle to_isBgmMute;
+    [SerializeField] Toggle to_isSfxMute;
+    [SerializeField] Slider sl_bgmVolume;
+    [SerializeField] Slider sl_sfxVolume;
+    [SerializeField] Dropdown dp_screenMode;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public enum ScreenMode { FULLSCREEN, WINDOW, FULLSCREENWINDOW};
 
     public void GameEnd()
     {
@@ -22,5 +18,42 @@ public class MainMenuUIManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
         Application.Quit();
+    }
+
+    /*
+    사운드매니저에서 각 옵션의 값을 받아오는 함수
+    */public void GetOptionValue()
+    {
+       sl_bgmVolume.value = SoundManager.Instance.GetBgmVolume();
+       sl_sfxVolume.value = SoundManager.Instance.GetSfxVolume();
+       to_isBgmMute.isOn = !SoundManager.Instance.GetBgmMute();
+       to_isSfxMute.isOn = !SoundManager.Instance.GetSfxMute();
+    }
+    public void SetVolume()
+    {
+        SoundManager.Instance.SetSfxVolume(sl_sfxVolume.value, !to_isSfxMute.isOn);
+        SoundManager.Instance.SetBgmVolume(sl_bgmVolume.value, !to_isBgmMute.isOn);
+    }
+
+    public void SetScreenOption()
+    {
+        ScreenMode screenSize = (ScreenMode)dp_screenMode.value;
+        switch (screenSize)
+        {
+            case ScreenMode.FULLSCREEN:
+                Screen.fullScreen = true;
+                break;
+
+            case ScreenMode.WINDOW:
+                Screen.fullScreenMode = FullScreenMode.Windowed;
+                Screen.SetResolution(1280, 720, false);
+                break;
+
+            case ScreenMode.FULLSCREENWINDOW:
+                Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+                break;
+            default:
+                break;
+        }
     }
 }

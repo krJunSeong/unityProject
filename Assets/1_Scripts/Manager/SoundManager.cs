@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
-{ 
+{
     public static SoundManager Instance;
-    public enum Sfx {BUTTON, SWING1, SWING2, SWING3,
+    public enum Sfx { BUTTON, SWING1, SWING2, SWING3,
         KOHAKU_ATTACK1, KOHAKU_ATTACK2, KOHAKU_ATTACK3, KOHAKU_DEAD,
         KOHAKU_HIT1, KOHAKU_HIT2, KOHAKU_WINSOUND1, KOHAKU_WINSOUND2,
         ENEMY_ATTACK, ENEMY_DEAD, ENEMY_HIT1, ENEMY_HIT2
     };
-    public enum Bgm {COSTALTOWN };
+    public enum Bgm { COSTALTOWN };
 
     [SerializeField] AudioClip[] bgmClips;
     [SerializeField] AudioClip[] sfxClips;
@@ -84,4 +84,21 @@ public class SoundManager : MonoBehaviour
             break;
         }
     }
+
+    // -------------- Get Set --------------------------
+    public float GetSfxVolume() { return sfxVolume; }
+    public float GetBgmVolume() { return bgmVolume; }
+    public bool GetSfxMute() { return sfxPlayers[0].mute; }
+    public bool GetBgmMute() { return bgmPlayer.mute; }
+
+    public void SetSfxVolume(float f, bool isMute) 
+    { 
+        sfxVolume = f;
+        for(int i = 0; i < sfxPlayers.Length; i++)
+        {
+            sfxPlayers[i].mute = isMute;
+            sfxPlayers[i].volume = sfxVolume;
+        }
+    }
+    public void SetBgmVolume(float f, bool isMute) { bgmVolume = f; bgmPlayer.volume = f; bgmPlayer.mute = isMute; }
 }

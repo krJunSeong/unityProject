@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 public class MainMenuUIManager : MonoBehaviour
@@ -36,7 +34,7 @@ public class MainMenuUIManager : MonoBehaviour
     }
 
     public void SetScreenOption()
-    {
+    {   //더 늘어날 시에는 배열 생성해서 구조체 만들어서 넣고, 그걸 value값으로 컨트롤할 것
         ScreenMode screenSize = (ScreenMode)dp_screenMode.value;
         switch (screenSize)
         {

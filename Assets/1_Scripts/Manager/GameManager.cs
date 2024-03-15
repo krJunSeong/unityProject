@@ -4,15 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
-{
+{ 
     public QuestManager questManager;
     public TalkManager talkManager;
-    public GameObject scanObject;
+
+    // ------------ Talk System ------------
     public Text talkText;
     public GameObject talkPanel;
     public Image portraitImg;
     public int talkIndex = 0;
     public bool isAction;
+
+    // ------------ Player ------------
+    [SerializeField] GameObject player;
+    public GameObject scanObject;
+
+    private void Start()
+    {
+        InitPlayerMoveStartPos();
+    }
 
     public void TalkAction(GameObject scanObj)
     {
@@ -51,5 +61,11 @@ public class GameManager : MonoBehaviour
         talkIndex++;
 
         //int questTalkIndex = questManager.GetQuestTalkIndex(id);
+    }
+
+    void InitPlayerMoveStartPos()
+    {
+        player = GameObject.Find("CreateUnitychan");
+        player.transform.position = GameObject.Find("GameStartPosition").transform.position;
     }
 }

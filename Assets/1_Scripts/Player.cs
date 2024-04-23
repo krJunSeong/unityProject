@@ -18,21 +18,26 @@ public class Player : MonoBehaviour
     bool isAttack;
     bool eDown;
     bool isInteraction = false;
-
+    KeyCode[] numbers = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3 };
+                          //KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6,
+                          //KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9};
     Vector3 moveVec3;
 
     // -----------------------------------------
     [SerializeField] GameManager gameManager;
     [SerializeField] GameObject scanObject;
     [SerializeField] GameObject nearObject;
-    [SerializeField] Weapon weapon;
 
     Rigidbody rigid;
     Animator anim;
+    // -------------Weapon ---------------
+    [SerializeField] Weapon weapon;
+    [SerializeField] Weapon[] weaponList;
 
     // ----------------- combo Attack ----------------------
-    public float attackDelay = 0.3f;    // 공격 간 딜레이
-    public int maxComboCount = 5;       // 최대 콤보 카운트
+    float attackDelay = 0.3f;    // 공격 간 딜레이
+    int maxComboCount = 5;       // 최대 콤보 카운트
+    bool isComboReserve = false;
 
     private int currentComboCount = 0; // 현재 콤보 카운트
     private float lastAttackTime = 0f; // 마지막 공격 시간
@@ -42,6 +47,8 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         DontDestroyOnLoad(this);
+        for (int i = 0; i < weaponList.Length; i++)
+            if (weaponList[i].gameObject.activeSelf) weapon = weaponList[i];
     }
 
     // Update is called once per frame
@@ -83,6 +90,11 @@ public class Player : MonoBehaviour
         //v = gameManager.isAction ? 0 : Input.GetAxisRaw("Vertical");
 
         eDown = Input.GetButtonDown("Interaction");
+
+        for(int i = 0; i < numbers.Length; i++)
+        {
+            if (Input.GetKeyDown(numbers[i])) ChangeWeapon(i);
+        }
     }
     void Jump()
     {
@@ -117,46 +129,85 @@ public class Player : MonoBehaviour
             gameManager.TalkAction(scanObject);
         }
     }
+
    void ChangeInteraction()
     {
         isInteraction = !isInteraction;
     }
+    void ChangeWeapon(int num)
+    {
+        // 같은 무기를 눌렀으면 무시
+        if (weapon == weaponList[num]) return;
+
+        // 무기를 바꾸는 함수
+        weapon = weaponList[num];
+        GetSetting(weapon);
+    }
+    void GetSetting(Weapon weapon)
+    {
+        attackDelay = weapon.GetDelayTime();
+        maxComboCount = weapon.GetMaxCombo();
+
+    }
     void Attack()
     {
         // 공격 버튼이 눌렸을 때 콤보 공격 시도
-        if (Input.GetButton("Attack") && Time.time - lastAttackTime > attackDelay)
+        if (Input.GetButtonDown("Attack") && CheckAttackDelay())
         {
-            AttemptComboAttack();
+            ExcuteAttack();
         }
 
         // 콤보 유지 시간 초과 시 콤보 초기화
         // time.time, 게임이 시작된 이후의 전체 시간(초)을 반환하는 Unity에서 제공하는 변수, 이 값은 게임이 시작되면 0부터 시작하여 지속적으로 증가
         // AttackAttempt에서 lastAttackTime을 갱신해줘서, 15초(현재 시간) - 12초(마지막 작동한 시간) > 0.3초 이런식으로 작동함
-        if (Time.time - lastAttackTime > attackDelay && isAttack)
-        {
-            ResetCombo();
-        }
+        //if (Time.time - lastAttackTime > attackDelay && isAttack)
+        //{
+        //    ResetCombo();
+        //}
     }
-    void AttemptComboAttack()
-    {
-        Debug.Log("Attack");
 
-        currentComboCount++;
+    bool CheckAttackDelay()
+    {
+        return Time.time - lastAttackTime > attackDelay;
+    }
+    void ExcuteAttack()
+    {
+        // 여기까지 왔다면 공격 딜레이 시간은 지났고, 어택버튼을 누른 상태
+        // 공격중인데 공격 딜레이시간 지났고, 어택버튼을 눌렀다면 다음 콤보공격 할 의지로 판단.
+        if (isAttack) isComboReserve = true;
+
+        currentComboCount = ((currentComboCount + 1) % (maxComboCount+1));
+
         isAttack = true;
+        anim.SetInteger("comboCount", currentComboCount);
         anim.SetBool("isAttack", isAttack);
 
-        if (currentComboCount == 1) anim.SetTrigger("trDefaultAttack");
-        else if(currentComboCount > 1) anim.SetTrigger("trComboAttack");
+        // 첫 공격이라면 첫 공격 애니메이션 트리거만 작동
+        if(currentComboCount == 1) anim.SetTrigger("trStartAttack");
 
         GetComponent<Weapon>()?.Use();
         lastAttackTime = Time.time;
+
+        //Debug.Log("Attack" + currentComboCount);
     }
-    void ResetCombo()
+    public void ResetCombo(int i)
     {
+        if (isComboReserve) return;
+        if (currentComboCount != i) return;
+
+        //Debug.Log("ResetCombo i: " + i + " curCombo: " + currentComboCount);
+
         currentComboCount = 0;
         isAttack = false;
-        anim.SetBool("isAttack", isAttack);
+        isComboReserve = false;
+
+        anim?.SetInteger("comboCount", currentComboCount);
+        anim?.SetBool("isAttack", isAttack);
+
+        weapon?.UseEnd();
     }
+
+    public void ResetReserveComobo() { isComboReserve = false; }
 
     // -------------------------------------------------------------------------
     private void OnTriggerEnter(Collider other)

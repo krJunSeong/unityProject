@@ -22,7 +22,6 @@ public class DefaultWeapon : Weapon
     
     protected override void InitSetting()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        bodyCollider = GetComponent<Collider>();
+
     }
 }

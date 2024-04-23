@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TreeManager : MonoBehaviour
+public class MiningTool : Weapon
 {
     // Start is called before the first frame update
     void Start()
@@ -14,5 +14,10 @@ public class TreeManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public override void Use()
+    {
+        base.Use();
     }
 }

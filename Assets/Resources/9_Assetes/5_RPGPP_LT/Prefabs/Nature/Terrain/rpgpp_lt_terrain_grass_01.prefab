@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4835789832631930}
   - component: {fileID: 33139717363420194}
   - component: {fileID: 23768732900421168}
+  - component: {fileID: 7937484380549316772}
   m_Layer: 0
   m_Name: rpgpp_lt_terrain_grass_01
   m_TagString: Untagged
@@ -81,3 +82,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7937484380549316772
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069567032315564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 19.409933, y: 0.4641876, z: 20.88282}
+  m_Center: {x: 0, y: 0, z: 0}

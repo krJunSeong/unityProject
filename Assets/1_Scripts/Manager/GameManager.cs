@@ -67,5 +67,6 @@ public class GameManager : MonoBehaviour
     {
         player = GameObject.Find("CreateUnitychan");
         player.transform.position = GameObject.Find("GameStartPosition").transform.position;
+        player.GetComponent<Rigidbody>().useGravity = true;
     }
 }

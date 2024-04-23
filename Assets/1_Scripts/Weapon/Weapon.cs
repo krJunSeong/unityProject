@@ -7,10 +7,9 @@ public class Weapon : MonoBehaviour
     public enum WeaponType { MELEE, AXE, PIX }
 
     [SerializeField] protected WeaponType type;
-    [SerializeField] protected int limitCombo;
     [SerializeField] protected float damage;
     [SerializeField] protected float delayTime;
-    [SerializeField] protected bool isReady;
+    [SerializeField] protected int maxCombo;
 
     [SerializeField] protected LineRenderer lineRenderer;
     [SerializeField] protected Collider bodyCollider;
@@ -19,20 +18,35 @@ public class Weapon : MonoBehaviour
 
     public virtual void Use()
     {
-        /* switch (type)
-         {
-             case WeaponType.MELEE:
-                 StopCoroutine("MeleeAttack");
-                 StartCoroutine("MeleeAttack");
-                 break;
-             case WeaponType.AXE:
-                 break;
-             case WeaponType.PIX:
-                 break;
-
-         }*/
+        bodyCollider.enabled = true;
     }
-    protected virtual void InitSetting() { }
+    protected virtual void InitSetting() 
+    {
+        lineRenderer = GetComponent<LineRenderer>();
+        bodyCollider = GetComponent<Collider>();
+    }
+
+    public virtual void UseEnd() 
+    {
+        if(bodyCollider != null) bodyCollider.enabled = false;
+    }
+
+    public float GetDelayTime() { return delayTime; }
+    public int GetMaxCombo() { return maxCombo; }
+
+
+    /* switch (type)
+ {
+     case WeaponType.MELEE:
+         StopCoroutine("MeleeAttack");
+         StartCoroutine("MeleeAttack");
+         break;
+     case WeaponType.AXE:
+         break;
+     case WeaponType.PIX:
+         break;
+
+ }*/
 
     /*
     IEnumerator MeleeAttack()

@@ -4,16 +4,9 @@ using UnityEngine;
 
 public class LoggingTool : Weapon
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        InitSetting();
     }
 
     protected override void InitSetting()
@@ -43,6 +36,6 @@ public class LoggingTool : Weapon
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Tree")
-            other.gameObject.GetComponent<ILoggingAble>().Cut(damage);
+            other.gameObject.GetComponent<ILoggingAble>().Used(damage);
     }
 }

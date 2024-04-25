@@ -332,6 +332,7 @@ Transform:
   - {fileID: 2093542906}
   - {fileID: 1205289291}
   - {fileID: 766042417}
+  - {fileID: 1485106918}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -554,10 +555,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &86783561
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -625,10 +622,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1 &106891917
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,10 +1020,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &143201454
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1704,10 +1693,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &230290536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3950,8 +3935,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 522811750}
-  m_LocalRotation: {x: 0.067610405, y: -0.74394435, z: 0.07613579, w: 0.66043854}
-  m_LocalPosition: {x: 100.33986, y: 30.604393, z: 59.514275}
+  m_LocalRotation: {x: 0.20342919, y: 0.01909298, z: -0.0039668824, w: 0.9788955}
+  m_LocalPosition: {x: 68.88039, y: 28.023563, z: 12.287916}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4629,10 +4614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &615697915
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5122,10 +5103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &645568371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5197,10 +5174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &646769828
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7550,23 +7523,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
---- !u!65 &968424729
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 968424727}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.7, y: 3.62, z: 1.75}
-  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &969842195
 GameObject:
   m_ObjectHideFlags: 0
@@ -8921,10 +8877,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &1224500127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9480,10 +9432,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1 &1246982907
 GameObject:
   m_ObjectHideFlags: 0
@@ -10535,10 +10483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &1423132680
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10618,10 +10562,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &1432348629
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10974,6 +10914,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4947743726954784, guid: 63ce2b31e16acab4d8a41f884c36333c, type: 3}
   m_PrefabInstance: {fileID: 1466487755}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1485106917
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1485106918}
+  m_Layer: 0
+  m_Name: Stones
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1485106918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485106917}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1655738400}
+  m_Father: {fileID: 53444463}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1500069761
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11173,10 +11144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &1523412878
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11672,10 +11639,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &1589324303
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12216,10 +12179,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
+--- !u!1001 &1655738397
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1485106918}
+    m_Modifications:
+    - target: {fileID: 1000013880558708, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+      propertyPath: m_Name
+      value: LPN_Large_Rocks.006
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000013880558708, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+      propertyPath: m_TagString
+      value: Stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013014094432, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013014094432, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.6165237
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013014094432, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.148262
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013014094432, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -13.175158
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013014094432, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013014094432, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013014094432, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013014094432, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013014094432, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013014094432, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013014094432, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+--- !u!1 &1655738398 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1000013880558708, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+  m_PrefabInstance: {fileID: 1655738397}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1655738399
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655738398}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.5305505, y: 1.1577224, z: 3.6395862}
+  m_Center: {x: -0.17203021, y: 0.5788612, z: 0.032854557}
+--- !u!4 &1655738400 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4000013014094432, guid: 2dfc697bf327e401687be9130ba13f2a, type: 3}
+  m_PrefabInstance: {fileID: 1655738397}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1655738401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655738398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d19646b14b8eea2458c96e5bd280e6fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1683111089
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13637,10 +13692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &1868782965
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13782,10 +13833,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &1884455553
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14237,10 +14284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &1948866325
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14948,10 +14991,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 918d1b8478394894689f121c32e1a591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropPersent: 100
-  maxHp: 10
-  hp: 10
-  respawnTime: 3
 --- !u!1001 &2075565520
 PrefabInstance:
   m_ObjectHideFlags: 0

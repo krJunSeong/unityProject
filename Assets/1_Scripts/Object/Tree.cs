@@ -4,23 +4,25 @@ using UnityEngine;
 
 public class Tree : MonoBehaviour, ILoggingAble
 {
-    [SerializeField] float dropPersent;
-    [SerializeField] float maxHp = 10.0f;
-    [SerializeField] float hp = 10.0f;
-    [SerializeField] float respawnTime = 3.0f;
+    [SerializeField] ObjectState state;
 
-    public void Cut(float dam)
+    private void Awake()
     {
-        hp -= dam;
-        if (hp <= 0) Dead();
-        if (Random.Range(0.0f, 100.0f) < dropPersent) DropItem();
+        state.Init(100.0f, 10.0f, 10.0f, 3.0f);
+    }
+
+    public void Used(float dam)
+    {
+        state.hp -= dam;
+        if (state.hp <= 0) Dead();
 
         Debug.Log("Cut");
     }
 
     void Dead()
     {
-        Invoke(nameof(Respawn), respawnTime);
+        if (Random.Range(0.0f, 100.0f) < state.dropPersent) DropItem();
+        Invoke(nameof(Respawn), state.respawnTime);
         gameObject.SetActive(false);
     }
 
@@ -31,7 +33,7 @@ public class Tree : MonoBehaviour, ILoggingAble
 
     public void Respawn()
     {
-        hp = maxHp;
+        state.hp = state.maxHp;
         gameObject.SetActive(true);
     }
 }

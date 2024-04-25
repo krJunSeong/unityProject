@@ -11,6 +11,6 @@ public class SceneChange : MonoBehaviour
     private void OnEnable()
     {
         LoadingSceneManager.LoadScene(sceneName);
-        img_blackWindow.SetActive(false);
+        if (img_blackWindow != null) img_blackWindow.SetActive(false);
     }
 }

@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 { 
     public QuestManager questManager;
     public TalkManager talkManager;
+    [SerializeField] ItemGetEffect itemGetEffet;
 
     // ------------ Talk System ------------
     public Text talkText;
@@ -18,6 +19,19 @@ public class GameManager : MonoBehaviour
     // ------------ Player ------------
     [SerializeField] GameObject player;
     public GameObject scanObject;
+
+    public static GameManager Instance { get; private set; }
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        // DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {
@@ -68,5 +82,24 @@ public class GameManager : MonoBehaviour
         player = GameObject.Find("CreateUnitychan");
         player.transform.position = GameObject.Find("GameStartPosition").transform.position;
         player.GetComponent<Rigidbody>().useGravity = true;
+    }
+
+    public void GetItemEffect(string imageName, Vector3 pos, int cnt)
+    {
+        // 오브젝트 이펙트 발생 함수
+        itemGetEffet.UseImage(imageName, pos, cnt);
+    }
+    public void GiveItemToPlayer(string itemName, int num)
+    {
+        // 플레이어에게 아이템 주는 함수
+        player.GetComponent<Player>().AddItem(itemName, num);
+    }
+
+    public int GetPlayerInventory(string itemName)
+    {
+        //1. inventory 조회, inventory의 key값에 해당하는 값이 있으면 해당값 갖고 와서 텍스트 초기화
+        //2. 만약 없다면 Text 0;
+
+        return player.GetComponent<Player>().GetItemInInventory(itemName);
     }
 }

@@ -34,6 +34,9 @@ public class Player : MonoBehaviour
     [SerializeField] Weapon weapon;
     [SerializeField] Weapon[] weaponList;
 
+    // -------------- Item ----------------
+    Inventory inventory = new Inventory();
+
     // ----------------- combo Attack ----------------------
     float attackDelay = 0.3f;    // 공격 간 딜레이
     int maxComboCount = 5;       // 최대 콤보 카운트
@@ -44,11 +47,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        rigid = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
-        DontDestroyOnLoad(this);
-        for (int i = 0; i < weaponList.Length; i++)
-            if (weaponList[i].gameObject.activeSelf) weapon = weaponList[i];
+        Init();
     }
 
     // Update is called once per frame
@@ -74,6 +73,17 @@ public class Player : MonoBehaviour
             rigid.MoveRotation(Quaternion.Slerp(rigid.rotation, Quaternion.LookRotation(moveVec3), 0.3f));
     }
 
+    void Init()
+    {
+        rigid = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
+        DontDestroyOnLoad(this);
+
+        // weapon 찾기
+        // Gameobject active가 이런데? 왜 list에 들어오는 걸까?
+        for (int i = 0; i < weaponList.Length; i++)
+            if (weaponList[i].gameObject.activeSelf) weapon = weaponList[i];
+    }
     void GetInput()
     {
         if (gameManager == null)
@@ -140,15 +150,28 @@ public class Player : MonoBehaviour
         if (weapon == weaponList[num]) return;
 
         // 무기를 바꾸는 함수
+        weapon.gameObject.SetActive(false);
+        weapon.enabled = false;
+
         weapon = weaponList[num];
+
+        weapon.gameObject.SetActive(true);
+        weapon.GetComponent<Weapon>().enabled = true;
+
+        // 무기를 바꿨을 때 maxCount를 무기에서 받아올 필요가 있다
+        ZeroResetCombo();
         GetSetting(weapon);
     }
+
     void GetSetting(Weapon weapon)
     {
         attackDelay = weapon.GetDelayTime();
         maxComboCount = weapon.GetMaxCombo();
+        currentComboCount = 0;
 
+        Debug.Log($"maxComboCount: {maxComboCount}");
     }
+    // -------------------------------------- Attack -------------------------
     void Attack()
     {
         // 공격 버튼이 눌렸을 때 콤보 공격 시도
@@ -178,6 +201,8 @@ public class Player : MonoBehaviour
 
         currentComboCount = ((currentComboCount + 1) % (maxComboCount+1));
 
+        Debug.Log($"currentComboCount:{currentComboCount}");
+
         isAttack = true;
         anim.SetInteger("comboCount", currentComboCount);
         anim.SetBool("isAttack", isAttack);
@@ -185,7 +210,7 @@ public class Player : MonoBehaviour
         // 첫 공격이라면 첫 공격 애니메이션 트리거만 작동
         if(currentComboCount == 1) anim.SetTrigger("trStartAttack");
 
-        GetComponent<Weapon>()?.Use();
+        weapon.GetComponent<Weapon>().Use();
         lastAttackTime = Time.time;
 
         //Debug.Log("Attack" + currentComboCount);
@@ -207,7 +232,30 @@ public class Player : MonoBehaviour
         weapon?.UseEnd();
     }
 
+    private void ZeroResetCombo()
+    {
+        // 현재 콤보 카운트를 기준으로 콤보를 초기화
+        currentComboCount = 0;
+        isAttack = false;
+        isComboReserve = false;
+
+        anim?.SetInteger("comboCount", currentComboCount);
+        anim?.SetBool("isAttack", isAttack);
+
+        weapon?.UseEnd();
+    }
     public void ResetReserveComobo() { isComboReserve = false; }
+
+    // ------------------------------------------------
+    public void AddItem(string name, int num)
+    {
+        inventory.AddItem(name, num);
+    }
+
+    public int GetItemInInventory(string name)
+    {
+        return inventory.GetItemInInventory(name);
+    }
 
     // -------------------------------------------------------------------------
     private void OnTriggerEnter(Collider other)

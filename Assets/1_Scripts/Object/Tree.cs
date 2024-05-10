@@ -5,10 +5,16 @@ using UnityEngine;
 public class Tree : MonoBehaviour, ILoggingAble
 {
     [SerializeField] ObjectState state;
+    [SerializeField] string dropItemName = "Tree";
 
     private void Awake()
     {
         state.Init(100.0f, 10.0f, 10.0f, 3.0f);
+    }
+
+    private void Update()
+    {
+
     }
 
     public void Used(float dam)
@@ -21,14 +27,16 @@ public class Tree : MonoBehaviour, ILoggingAble
 
     void Dead()
     {
-        if (Random.Range(0.0f, 100.0f) < state.dropPersent) DropItem();
+        //if (Random.Range(0.0f, 100.0f) < state.dropPersent) DropItem();
         Invoke(nameof(Respawn), state.respawnTime);
+        DropItem(Random.Range(1, 4));
         gameObject.SetActive(false);
     }
 
-    void DropItem() 
+    void DropItem(int num) 
     {
-        Debug.Log("Item Drop");
+        // 아이템 드랍하는 함수
+        GameManager.Instance.GetItemEffect(dropItemName, this.transform.position, num);   // 게임매니저 이펙트 발생.  게임매니저에서 아이템 Give 함수 작동
     }
 
     public void Respawn()

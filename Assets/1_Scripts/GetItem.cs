@@ -57,7 +57,7 @@ public class GetItem : MonoBehaviour
     {
         if(nearObjects.Count > 0)
         {
-            //inventory.GetItem(nearObjects[0]);
+            //inventory.AddItem(nearObjects[0]);
             nearObjects.RemoveAt(0);
 
             //1. 해당 오브젝트 비활성화

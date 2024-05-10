@@ -24,6 +24,10 @@ public class DataManager : MonoBehaviour
     List<ChatData> storyData;
     Dictionary<int, List<ChatData>> dChapterStoryData { get; set; }
 
+    // ----------- Item --------------------
+    Dictionary<string, Item> dItemData;
+    [SerializeField] Sprite[] ItemImage;
+
     void Awake()
     {
         if(Instance != null)
@@ -53,4 +57,11 @@ public class DataManager : MonoBehaviour
     {
         return imageMap[num];
     }
+
+    void AddItemData()
+    {
+        //dItemData["Tree"] = new Item("Tree", );
+    }
+
+    public Item GetItemData(string str) { return dItemData[str]; }
 }

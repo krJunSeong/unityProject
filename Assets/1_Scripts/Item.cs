@@ -5,9 +5,14 @@ using UnityEngine.UI;
 public class Item : ScriptableObject
 {
     // Item 기본 정보
-    public int itemCode;
     public string itemName;
     public Sprite itemImage;
+
+    public Item(string name, Sprite itemImage)
+    {
+        itemName = name;
+        this.itemImage = itemImage;
+    }
 }
 
 // ScriptableObject:

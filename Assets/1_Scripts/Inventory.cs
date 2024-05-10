@@ -6,6 +6,7 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField]
     List<Slot> slots;
+    Dictionary<string, int> inventory = new Dictionary<string, int>();
     
     void Start()
     {
@@ -18,7 +19,19 @@ public class Inventory : MonoBehaviour
     {
 
     }
-    public void GetItem(GameObject inputGameObject)
+
+    public void AddItem(string item, int num)
+    {
+        // 아이템 추가 함수
+
+        if(inventory.ContainsKey(item))
+        {
+            inventory[item] += num;
+        }
+        else inventory.Add(item, num);
+    }
+
+    public void AddItem(GameObject inputGameObject)
     {
         foreach(Slot slot in slots)
         {
@@ -36,5 +49,14 @@ public class Inventory : MonoBehaviour
         }
         // 3. 빈 슬롯이 없다면 로그 출력.
         Debug.Log("인벤토리에 빈 자리가 없습니다.");
+    }
+
+    public int GetItemInInventory(string name)
+    {
+        // 인벤토리 내의 아이템 개수 출력하는 함수
+        // 해당 아이템 없으면 0개 리턴
+        if (inventory.ContainsKey(name)) return inventory[name];
+
+        return 0;
     }
 }

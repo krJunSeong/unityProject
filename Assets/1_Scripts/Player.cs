@@ -1,7 +1,17 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public struct CharacterState
 {
+    public float damage { get; set; }
+    public float hp { get; set; }
+    public float armor { get; set; }
+    public float speed { get; set; }
+};
+
+public class Player : MonoBehaviour, IDamageAble
+{
+    CharacterState status;
+
     // -------------------
     private float moveSpeed = 0.0f;
     private float walkSpeed = 5.0f;
@@ -283,5 +293,11 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "Item")
             nearObject = null;
+    }
+
+    public void Damaged(float damage)
+    {
+        Debug.Log("Player가 공격당했다!");
+        //status.hp -= Random.Range(status.armor - 3, status.armor + 1);
     }
 }

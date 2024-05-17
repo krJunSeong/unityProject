@@ -13,8 +13,6 @@ public class MiningTool : Weapon
     {
         base.Use();
         bodyCollider.enabled = true;
-
-        Debug.Log("use");
     }
 
     public override void UseEnd()
@@ -26,19 +24,11 @@ public class MiningTool : Weapon
     }
 
     private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("collision used : " + collision.gameObject.name);
-
-        if (collision.transform.tag == "Stone")
-        { collision.gameObject.GetComponent<ILoggingAble>().Used(damage);
-        }
-           
+    { 
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger loged : " + other.gameObject.name);
-
         if (other.transform.tag == "Stone")
         {
             other.gameObject.GetComponent<ILoggingAble>().Used(damage);

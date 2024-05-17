@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
-{ 
+{
     public QuestManager questManager;
     public TalkManager talkManager;
     [SerializeField] ItemGetEffect itemGetEffet;
@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour
     {
         int questTalkIndex = questManager.GetQuestTalkIndex(id);
         string talkData = talkManager.GetTalk(id + questTalkIndex, talkIndex);
-        if(talkData == null)
+        if (talkData == null)
         {
             talkPanel.SetActive(false);
             talkIndex = 0;
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if(isNpc)
+        if (isNpc)
         {
             talkText.text = talkData.Split(':')[0];
 
@@ -101,5 +101,10 @@ public class GameManager : MonoBehaviour
         //2. 만약 없다면 Text 0;
 
         return player.GetComponent<Player>().GetItemInInventory(itemName);
+    }
+
+    public Vector3 GetPlayerPosition()
+    {
+        return player.transform.position;
     }
 }

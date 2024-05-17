@@ -21,8 +21,6 @@ public class Tree : MonoBehaviour, ILoggingAble
     {
         state.hp -= dam;
         if (state.hp <= 0) Dead();
-
-        Debug.Log("Cut");
     }
 
     void Dead()

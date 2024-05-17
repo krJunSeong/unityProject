@@ -5,6 +5,8 @@ using UnityEngine;
 public class Stone : MonoBehaviour, ILoggingAble
 {
     [SerializeField] ObjectState state;
+    [SerializeField] string dropItemName = "Stone";
+
 
     void Awake()
     {
@@ -14,20 +16,19 @@ public class Stone : MonoBehaviour, ILoggingAble
     {
         state.hp -= dam;
         if (state.hp <= 0) Dead(); 
-
-        Debug.Log("Cut");
     }
+
     void Dead()
     {
-        if (Random.Range(0.0f, 100.0f) < state.dropPersent) DropItem();
+        if (Random.Range(0.0f, 100.0f) < state.dropPersent) DropItem(Random.Range(1, 4));
 
         Invoke(nameof(Respawn), state.respawnTime);
         gameObject.SetActive(false);
     }
 
-    void DropItem()
+    void DropItem(int num)
     {
-        Debug.Log("Item Drop");
+        GameManager.Instance.GetItemEffect(dropItemName, this.transform.position, num);   // 게임매니저 이펙트 발생.  게임매니저에서 아이템 Give 함수 작동
     }
 
     public void Respawn()

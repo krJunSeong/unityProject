@@ -9,10 +9,9 @@ public class MiningTool : Weapon
         base.InitSetting();
     }
 
-    public override void Use()
+    public override void Use(float dam)
     {
-        base.Use();
-        bodyCollider.enabled = true;
+        base.Use(dam);
     }
 
     public override void UseEnd()
@@ -33,6 +32,7 @@ public class MiningTool : Weapon
         {
             other.gameObject.GetComponent<ILoggingAble>().Used(damage);
         }
-            
+
+        if (attackAble) other.gameObject.GetComponent<IDamageAble>().Damaged(damage);
     }
 }

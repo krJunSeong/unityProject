@@ -14,10 +14,9 @@ public class LoggingTool : Weapon
         base.InitSetting();
     }
 
-    public override void Use()
+    public override void Use(float dam)
     {
-        base.Use();
-        bodyCollider.enabled = true;
+        base.Use(dam);
     }
 
     public override void UseEnd()
@@ -36,6 +35,10 @@ public class LoggingTool : Weapon
     private void OnTriggerEnter(Collider other)
     {
         if (other.transform.tag == "Tree")
-            other.gameObject.GetComponent<ILoggingAble>().Used(damage);
+            other.gameObject.GetComponent<ILoggingAble>()?.Used(damage);
+
+        if (attackAble && other.gameObject.tag == "Monster") {
+            Debug.Log($"{other.gameObject.name}°ú trigger µÆµû.");
+                other.gameObject.GetComponent<IDamageAble>()?.Damaged(damage); }
     }
 }

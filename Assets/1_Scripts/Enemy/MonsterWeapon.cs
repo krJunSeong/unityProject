@@ -18,9 +18,12 @@ public class MonsterWeapon : MonoBehaviour
     {
         StopCoroutine(Attack(useTime));
         StartCoroutine(Attack(useTime));
-    
     }
 
+    public void UsetEnd()
+    {
+        attackCollider.enabled = false;
+    }
     private void OnTriggerEnter(Collider other)
     {
         other.GetComponent<IDamageAble>()?.Damaged(damage);

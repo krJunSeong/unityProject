@@ -14,11 +14,14 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected LineRenderer lineRenderer;
     [SerializeField] protected Collider bodyCollider;
 
+    [SerializeField] protected bool attackAble = false;
+
     protected int curCombo = 0;
 
-    public virtual void Use()
+    public virtual void Use(float dam)
     {
         bodyCollider.enabled = true;
+        damage = dam;
     }
     protected virtual void InitSetting() 
     {
@@ -33,7 +36,6 @@ public class Weapon : MonoBehaviour
 
     public float GetDelayTime() { return delayTime; }
     public int GetMaxCombo() { return maxCombo; }
-
 
     /* switch (type)
  {

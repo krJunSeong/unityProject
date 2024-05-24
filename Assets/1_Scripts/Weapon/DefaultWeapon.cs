@@ -15,7 +15,7 @@ public class DefaultWeapon : Weapon
     {
         
     }
-    public override void Use()
+    public override void Use(float dam)
     {
 
     }

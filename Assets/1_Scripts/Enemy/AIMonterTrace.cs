@@ -13,13 +13,12 @@ public class AIMonterTrace : MonoBehaviour, IDamageAble
     Idle <-> attack1 애니메이션 조건은 attack1 true, false로 합니다.
      */
     [SerializeField] float hp = 100.0f;             // 체력
-    [SerializeField] float maxHp = 100.0f;             // 체력
+    [SerializeField] float maxHp = 100.0f;          // 체력
     [SerializeField] float armor = 2.0f;            // 아머
     [SerializeField] int   damage = 10;             // 공격력
     [SerializeField] float attackRange = 1.5f;      // 공격 범위
     [SerializeField] int   attackMaxCombo = 2;      // 최대 콤보수
     [SerializeField] float limitAttackDelay = 2.0f; // 공격 딜레이 리미트 시간
-    [SerializeField] float limitComboTime = 1.0f;   // 콤보 공격 기다려주는 시간
     
     [SerializeField] bool isConnectCombo2 = false;  // 2번째 공격까지 바로 할 것인가 설정
     [SerializeField] bool isConnectCombo3 = false;  // 3번째 공격까지 바로 할 것인가 설정
@@ -27,15 +26,14 @@ public class AIMonterTrace : MonoBehaviour, IDamageAble
     [SerializeField] float stoppingDistance = 3f;   // 플레이어와의 정지 거리
     [SerializeField] float detectingTime = 0.5f;    // 플레이어 정보 갱신 주기
     [SerializeField] float speed = 2.0f;            // 이동속도
-    [SerializeField] float defaultSpeed = 2.0f;     // 기본속도
     [SerializeField] float distanceToPlayer;        // 대상과의 거리
-    [SerializeField] float deadMotionTime = 1.0f;   // 죽음 모션 시간
     [SerializeField] float isSturnMotionTime = 0.8f;// 스턴 모션 시간
 
     int damagedCnt = 0;
     int curCombo = 0;                               // 현재 콤보수
     float lastAttackTime = 0.0f;                    // 마지막 공격 시간
-    
+    private float testCnt = 0;
+
     bool isAttackAble;                          // 공격가능 유무
     bool isDead = false;                        // 죽음 유무
     bool isSturn = false;                       // 스턴 유무
@@ -110,9 +108,29 @@ public class AIMonterTrace : MonoBehaviour, IDamageAble
         구현
             1. Attack 1을 하고 만약 isConnectComboAttack2 = true라면, 1을 하고 바로 2까지 공격한다.
             2. bool isAttacking이 true라면, animator.Setbool(ismoving , false),
+
+        문제 Player의 여러 타수 문제.
+            - 원하는 기능: 한 콤보에는 1타, 2타, 3타, 4타, 5타
+            - 구현1
+                - 필요한 것들: 이름: 현재 타수
+                -             이름: 콤보 타수
+                -             [] 각 콤보별 타수
+                - 1. OnTriggerEnter == (tag == monster)?
+                    - 1. 딕셔너리에 이름이 있는지 체크
+                    - 2. 없으면 등록
+                    - 3. 딕셔너리로 이름 : (int)타수를 저장한다.
+                - 2. <이름: 타수>에 각 콤
+                - 3. 현재 콤보 == 타수, 1콤보는 안 맞고 2콤보에 맞았을 경우도 생각.
+                - 4. 그럼 몇 타수를 맞았는지 체크는 어디서 하는가?
+
+            - 구현2
+                - 수동으로 각 애니메이션의 끝 조사해서 끌 타이밍을 배열로 만들 것
+                - 
          */
 
-        if (Input.GetKeyUp(KeyCode.F1)) StartCoroutine(Dead());
+        if (Input.GetKeyUp(KeyCode.F1)) { StartCoroutine(Dead()); Invoke("ReLife", 3.0f); };
+        if (Input.GetKeyUp(KeyCode.F2)) { StartCoroutine(Sturn(isSturnMotionTime)); };
+
         CheckMoving();          // 특정 설정 동안에는 이동 막는 함수
         CheckAttackAble();      // 공격 가능하도록 체크하는 함수 
         if (distanceToPlayer < detectionRange) RotateTowards(GameManager.Instance.GetPlayerPosition()); // player를 향해 rotate하는 함수
@@ -122,8 +140,11 @@ public class AIMonterTrace : MonoBehaviour, IDamageAble
     }
     void CheckMoving()
     {
-        if (isAttacking || isSturn || isDead) { navMeshAgent.isStopped = true; }
-        else { navMeshAgent.isStopped = false; }
+        if (navMeshAgent.isOnNavMesh)
+        {
+            if (isAttacking || isSturn || isDead) { navMeshAgent.isStopped = true; }
+            else { navMeshAgent.isStopped = false; }
+        }
     }
     void CheckAttackAble()
     {
@@ -208,8 +229,7 @@ public class AIMonterTrace : MonoBehaviour, IDamageAble
     public void Damaged(float damage)
     {
         hp -= Random.Range(armor - 2, armor + 1);
-
-        Debug.Log($"공격당했다 몬스터 {++damagedCnt}");
+        Debug.Log($"test: {++testCnt}, Hp: {hp}");
         if (hp <= 0.0f)
         {
             StopCoroutine(Dead());
@@ -235,6 +255,8 @@ public class AIMonterTrace : MonoBehaviour, IDamageAble
     {
         //4. isSturn 당할 경우, 모션 시간 동안, 공격 이동 못함, 스턴 모션 실행
         //                      공격 초기화(lastAttak = time.time;), 콤보 0으로 초기화, 이동 못함(isStopped)
+
+        Debug.Log("Sturn 작동");
         animator.SetTrigger("TrSturn");
         lastAttackTime = Time.time;
         curCombo = 0;
@@ -254,34 +276,60 @@ public class AIMonterTrace : MonoBehaviour, IDamageAble
                 4.animation motion    = Dead()
                 5. 애니메이션 trDead, trSturn 생성
         */
-
-        isDead = true;
-        isAttackAble = false;
-        isAttacking = true;
-        isSturn = false;
-        animator.SetTrigger("TrDead");
-        bodyCollider.enabled = false;
-
+        DeadSetting();
         CancelInvoke("CheckPlayerDistance");
 
         Color color;
         while (true)
         {
-            for(int i = 0; i < materials.Length; i++)
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Die")) yield return new WaitForSeconds(0.3f);
+
+            for (int i = 0; i < materials.Length; i++)
             {
                 if (materials[i] == null) continue;
 
                 color = materials[i].color;
-                color.a /= animator.GetCurrentAnimatorStateInfo(0).length; // 애니메이션 Die에 맞춰서 setactive를 한 박자 늦게 꺼야한다.
+                color.a = Mathf.Lerp(1f, 0f, animator.GetCurrentAnimatorStateInfo(0).normalizedTime); // 애니메이션 Die에 맞춰서 setactive를 한 박자 늦게 꺼야한다.
                 materials[i].color = color;
 
+                yield return new WaitForSeconds(0.1f);
             }
-            if (materials[0].color.a <= 0.1f) break;
 
-            yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length / 2);
+            if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.8f) { gameObject.SetActive(false); break; }
+        }
+    }
+
+    void DeadSetting()
+    {
+        isDead = true;
+        isAttackAble = false;
+        isAttacking = false;
+        isSturn = false;
+        animator.SetTrigger("TrDead");
+        bodyCollider.enabled = false;
+    }
+
+    void ReLife()
+    {
+        Debug.Log("ReLife 작동");
+        isDead = false;
+        hp = maxHp;        
+        isAttackAble = true;
+        isAttacking = false;
+        isSturn = false;
+        bodyCollider.enabled = true;
+
+        Color color;
+        for (int i = 0; i < materials.Length; i++)
+        {
+            if (materials[i] == null) continue;
+
+            color = materials[i].color;
+            color.a = 1; // 애니메이션 Die에 맞춰서 setactive를 한 박자 늦게 꺼야한다.
+            materials[i].color = color;
         }
 
-        gameObject.SetActive(false);
-
+        gameObject.SetActive(true);
+        InvokeRepeating("CheckPlayerDistance", 0f, detectingTime);
     }
 }

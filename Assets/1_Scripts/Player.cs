@@ -53,7 +53,7 @@ public class Player : MonoBehaviour, IDamageAble
     int maxComboCount = 5;      // 최대 콤보 카운트
     int curComboCount = 0;    // 현재 콤보카운트
     int defaultComboCnt = 0;
-    int testCnt = 0;
+
     float[] animLenths = new float[6];
     bool isComboReserve = false;
 
@@ -104,7 +104,7 @@ public class Player : MonoBehaviour, IDamageAble
         {
             if (clip.name.Contains("attack"))
             {
-                if(clip.name[clip.name.Length - 1] - '0' < 6)
+                if(clip.name[clip.name.Length - 1] - '0' < 6) // attack'1' '2' - '0' = 1, 2
                 {
                     // Attack1  -> 1 -> (int)1
                     animLenths[clip.name[clip.name.Length - 1] - '0'] = clip.length;
@@ -248,7 +248,7 @@ public class Player : MonoBehaviour, IDamageAble
     void CheckComboDelay()
     {   // 공격이 끝났는지 체크하는 함수
         // 마지막 공격 키가 애니메이션 길이보다 오래됐을 경우 공격이 끝났다고 판단
-        if (isAttack && Time.time - lastAttackTime > animLenths[curComboCount] * 0.8f)
+        if (isAttack && Time.time - lastAttackTime > animLenths[curComboCount] * 0.9f)
         {
             //Debug.Log($"{++testCnt}번 작동!");
             curComboCount = defaultComboCnt;

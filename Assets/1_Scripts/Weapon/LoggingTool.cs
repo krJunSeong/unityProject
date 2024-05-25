@@ -38,7 +38,7 @@ public class LoggingTool : Weapon
             other.gameObject.GetComponent<ILoggingAble>()?.Used(damage);
 
         if (attackAble && other.gameObject.tag == "Monster") {
-            Debug.Log($"{other.gameObject.name}°ú trigger µÆµû.");
+            Debug.Log($"{other.gameObject.name}°ú trigger µÆ´Ù.");
                 other.gameObject.GetComponent<IDamageAble>()?.Damaged(damage); }
     }
 }

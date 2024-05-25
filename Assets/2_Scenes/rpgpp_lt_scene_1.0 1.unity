@@ -6008,7 +6008,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809828597}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 20
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
@@ -8521,15 +8521,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3e8bab9e323b2514192d52b0cb710510, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: -0.014
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3e8bab9e323b2514192d52b0cb710510, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0
+      value: -0.062
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3e8bab9e323b2514192d52b0cb710510, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3e8bab9e323b2514192d52b0cb710510, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10960,11 +10960,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524968675}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
+  m_IsTrigger: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.29737368, y: 0.059355184, z: 0.35}
-  m_Center: {x: 0.07038534, y: -0.0000001989891, z: 0.3}
+  m_Size: {x: 0.35, y: 0.1, z: 0.4}
+  m_Center: {x: 0.16, y: -0.0000001989891, z: 0.31}
 --- !u!114 &1524968680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14093,36 +14093,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 100
+  maxHp: 100
   armor: 2
   damage: 10
   attackRange: 2
   attackMaxCombo: 2
   limitAttackDelay: 2
-  limitComboTime: 1
-  isAttacking: 0
   isConnectCombo2: 1
   isConnectCombo3: 0
   detectionRange: 10
   stoppingDistance: 2
   detectingTime: 0.5
   speed: 2
-  defaultSpeed: 2
   distanceToPlayer: 0
-  deadMotionTime: 1
   isSturnMotionTime: 0.8
---- !u!114 &1969480022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969480018}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 346ba82fcb048704da20d732aeebb45f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1655738400}
+  materials:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!195 &1969480023
 NavMeshAgent:
   m_ObjectHideFlags: 0

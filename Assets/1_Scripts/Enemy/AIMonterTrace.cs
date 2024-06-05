@@ -255,8 +255,6 @@ public class AIMonterTrace : MonoBehaviour, IDamageAble
     {
         //4. isSturn 당할 경우, 모션 시간 동안, 공격 이동 못함, 스턴 모션 실행
         //                      공격 초기화(lastAttak = time.time;), 콤보 0으로 초기화, 이동 못함(isStopped)
-
-        Debug.Log("Sturn 작동");
         animator.SetTrigger("TrSturn");
         lastAttackTime = Time.time;
         curCombo = 0;

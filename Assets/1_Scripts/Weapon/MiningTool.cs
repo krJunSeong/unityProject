@@ -9,9 +9,9 @@ public class MiningTool : Weapon
         base.InitSetting();
     }
 
-    public override void Use(float dam)
+    public override void Use(float dam, int curCombo)
     {
-        base.Use(dam);
+        base.Use(dam, curCombo);
     }
 
     public override void UseEnd()

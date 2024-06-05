@@ -4,19 +4,14 @@ using UnityEngine;
 
 public class LoggingTool : Weapon
 {
-    private void Awake()
-    {
-        InitSetting();
-    }
-
     protected override void InitSetting()
     {
         base.InitSetting();
     }
 
-    public override void Use(float dam)
+    public override void Use(float dam, int curCombo)
     {
-        base.Use(dam);
+        base.Use(dam, curCombo);
     }
 
     public override void UseEnd()
@@ -24,12 +19,6 @@ public class LoggingTool : Weapon
         // UseEnd함수는 Player의 ResetCombo에서 작동한다.
         // ResetCombo는 애니메이션 함수로, 애니메이션 끝날 때 작동한다
         base.UseEnd();
-        bodyCollider.enabled = false;
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,8 +26,10 @@ public class LoggingTool : Weapon
         if (other.transform.tag == "Tree")
             other.gameObject.GetComponent<ILoggingAble>()?.Used(damage);
 
-        if (attackAble && other.gameObject.tag == "Monster") {
-            Debug.Log($"{other.gameObject.name}과 trigger 됐다.");
-                other.gameObject.GetComponent<IDamageAble>()?.Damaged(damage); }
+        if (attackAble && other.gameObject.tag == "Monster") 
+        {
+            //if(CheckDamagedList(other.name)) 
+                other.gameObject.GetComponent<IDamageAble>()?.Damaged(damage); 
+        }
     }
 }

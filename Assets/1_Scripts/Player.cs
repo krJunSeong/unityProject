@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-
+using UnityEngine.UI;
 public struct CharacterState
 {
     public float damage { get; set; }
@@ -11,55 +11,54 @@ public struct CharacterState
 
 public class Player : MonoBehaviour, IDamageAble
 {
-    CharacterState status;
+    public CharacterState status { get; }
 
     // -------------------
-    private float moveSpeed = 0.0f;
     private float walkSpeed = 5.0f;
     private float runSpeed = 10.0f;
     private float jumpFoce = 10.0f;
     private ForceMode forcemode = ForceMode.Impulse;
 
     // ---------------- input -------------
-    float h;
-    float v;
 
-    bool isRun;
     bool isJump;
     bool isAttack;      // 콤보 어택을 위한 변수
     bool eDown;
     bool isInteraction = false;
+    bool isSturn = false;
+    bool isBaatle = false;
     KeyCode[] numbers = { KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3 };
-                          //KeyCode.Alpha4, KeyCode.Alpha5, KeyCode.Alpha6,
-                          //KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9};
-    Vector3 moveVec3;
 
     // -----------------------------------------
     [SerializeField] GameManager gameManager;
     [SerializeField] GameObject scanObject;
     [SerializeField] GameObject nearObject;
 
+    Animator animator;
     Rigidbody rigid;
-    Animator anim;
+    PlayerMove playerMove;
+    PlayerAttack playerAttack;
     // -------------Weapon ---------------
     [SerializeField] Weapon weapon;
     [SerializeField] Weapon[] weaponList;
 
+    public Weapon Weapon => weapon;
     // -------------- Item ----------------
     Inventory inventory = new Inventory();
 
     // ----------------- combo Attack ----------------------
-    float attackDelay = 0.3f;   // 공격 간 딜레이
+    float attackDelay = 0.5f;   // 공격 간 딜레이
     int maxComboCount = 5;      // 최대 콤보 카운트
-    int curComboCount = 0;    // 현재 콤보카운트
+    int curComboCount = 0;      // 현재 콤보카운트
     int defaultComboCnt = 0;
 
     float[] animLenths = new float[6];
-    bool isComboReserve = false;
 
     private float lastAttackTime = 0f; // 마지막 공격 시간
+    // ---------- 지울 것
+    [SerializeField] Image image;
 
-    void Start()
+    void Awake()
     {
         Init();
     }
@@ -68,29 +67,38 @@ public class Player : MonoBehaviour, IDamageAble
     void Update()
     {
         GetInput();
-        Move();
         Interaction();
         Jump();
         Attack();
+        CheckTime();
+
+        image.enabled = weapon.GetBodyCol();
     }
 
     private void FixedUpdate()
     {
-        //transform.position += moveVec3;
-        //transform.LookAt(transform.position + moveVec3);
+        Move();
 
-        //transform.position += moveVec3 * moveSpeed * Time.deltaTime;
+        /* Move 내용
+        transform.position += moveVec3;
+        transform.LookAt(transform.position + moveVec3);
+
+        transform.position += moveVec3 * moveSpeed * Time.deltaTime;
         moveVec3 = new Vector3(h, 0, v).normalized;
         rigid.MovePosition(rigid.position + moveVec3 * moveSpeed * Time.deltaTime);
-
+        
         if(new Vector3(h,0,v).normalized.magnitude > 0)
             rigid.MoveRotation(Quaternion.Slerp(rigid.rotation, Quaternion.LookRotation(moveVec3), 0.3f));
+        */
     }
 
     void Init()
     {
         rigid = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
+        playerMove = GetComponent<PlayerMove>();
+        playerAttack = GetComponent<PlayerAttack>();
+
         DontDestroyOnLoad(this);
 
         // weapon 찾기
@@ -98,7 +106,7 @@ public class Player : MonoBehaviour, IDamageAble
             if (weaponList[i].gameObject.activeSelf) weapon = weaponList[i];
 
         // 공격 애니메이션의 클립 길이를 갖고 오는 부분
-        AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
+        AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
         animLenths[0] = 0f; // 가독성을 위해 0번 자리 안 쓰고 attack 1 ~5 까지 [1] ~ [5]로 쓸 것임
         foreach (AnimationClip clip in clips)
         {
@@ -108,26 +116,25 @@ public class Player : MonoBehaviour, IDamageAble
                 {
                     // Attack1  -> 1 -> (int)1
                     animLenths[clip.name[clip.name.Length - 1] - '0'] = clip.length;
-                    Debug.Log($"{clip.name} : {clip.length}");
                 }
             }
         }
     }
     void GetInput()
     {
+        /*
         if (gameManager == null)
         {
            // Debug.Log("게임매니저가 null 입니다.");
             //return;
         }
-        anim.SetBool("isComboReserve", isComboReserve);
-
-        h = curComboCount > defaultComboCnt? 0 : Input.GetAxisRaw("Horizontal");
-        v = curComboCount > defaultComboCnt? 0 : Input.GetAxisRaw("Vertical");
 
         // 나중에 게임매니저 연결하고 나서 이걸로 바꿔야 함
         //h = gameManager.isAction ? 0 : Input.GetAxisRaw("Horizontal");
         //v = gameManager.isAction ? 0 : Input.GetAxisRaw("Vertical");
+        */
+        playerMove.h = curComboCount > defaultComboCnt ? 0 : Input.GetAxisRaw("Horizontal");
+        playerMove.v = curComboCount > defaultComboCnt ? 0 : Input.GetAxisRaw("Vertical");
 
         eDown = Input.GetButtonDown("Interaction");
 
@@ -147,20 +154,10 @@ public class Player : MonoBehaviour, IDamageAble
     void Move()
     {
         if (isInteraction) return;
-        if(isAttack || isComboReserve) { h = 0; v = 0; return; }
+        if(isAttack) { playerMove.h = 0; playerMove.v = 0; return; }
 
-        isRun = Input.GetButton("Run");
-
-        moveSpeed = isRun? 7.0f : 5.0f;
-
-        moveVec3 = new Vector3(h, 0, v).normalized * moveSpeed * Time.deltaTime;
-        rigid.MovePosition(rigid.position + moveVec3);
-
-        transform.LookAt(transform.position + moveVec3);
-        // 대안: rigidbody.velocity = moveVec3
-
-        anim.SetBool("isWolk", moveVec3 != Vector3.zero);
-        anim.SetBool("isRun", isRun);        
+        //animator.SetBool("isWolk", moveVec3 != Vector3.zero);
+        //animator.SetBool("isRun", isRun);        
     }
     void Interaction()
     {
@@ -192,12 +189,13 @@ public class Player : MonoBehaviour, IDamageAble
         // 현재 콤보 카운트를 기준으로 콤보를 초기화
         curComboCount = defaultComboCnt;
         isAttack = false;
-        isComboReserve = false;
 
-        anim?.SetBool("isAttack", isAttack);
+        animator?.SetBool("isAttack", isAttack);
         weapon?.UseEnd();
 
         GetSetting(weapon);
+
+        playerAttack.weapon = this.weapon;
     }
 
     void GetSetting(Weapon weapon)
@@ -210,59 +208,68 @@ public class Player : MonoBehaviour, IDamageAble
     void Attack()
     {
         // Attack 버튼을 누르고 && 어택 딜레이 가능한 시간인지 체크
-        if (Input.GetButtonDown("Attack") && CheckAttackDelay())
+        if (Input.GetKeyDown(KeyCode.F) && CheckAttackDelay())
         {
             AttackExtention();
+            //playerAttack.Attack();
         }
-        CheckComboDelay();
+        
         // 콤보 유지 시간 초과 시 콤보 초기화
         // time.time, 게임이 시작된 이후의 전체 시간(초)을 반환하는 Unity에서 제공하는 변수, 이 값은 게임이 시작되면 0부터 시작하여 지속적으로 증가
         // AttackAttempt에서 lastAttackTime을 갱신해줘서, 15초(현재 시간) - 12초(마지막 작동한 시간) > 0.3초 이런식으로 작동함
-        //if (Time.time - lastAttackTime > attackDelay && isAttack)
-        //{
-        //    ResetCombo();
-        //}
     }
 
     void AttackExtention()
     {
         //1-1) 플레이어는 콤보 카운트를 갖고, 매 공격 버튼시 콤보카운트를 높인다
         curComboCount = (curComboCount % maxComboCount) + 1; //  1 ~ 5 1 2 3 4 0 -> 1
-        anim.SetTrigger("Attack" + curComboCount.ToString());
+        animator.SetTrigger("Attack" + curComboCount.ToString());
 
         //1-2) 무기 콜라이더 Off -> On 해줘서 Trigger 다시 작동
-        UseWeapon();
+        weapon.Use(status.damage, curComboCount);
         
         // 1-3) 마지막 공격 시간 갱신
         lastAttackTime = Time.time;
         isAttack = true;
+        isBaatle = true;
+
+        Debug.Log($"{Time.time}: {curComboCount}");
     }
 
     bool CheckAttackDelay()
     {
         // 공격 할 수 있는 딜레이 시간이 됐는지 체크하는 함수
         // animLenths [1] [2] [3] [4] [5] 만 쓴다. [0] 안 씀
-        return Time.time - lastAttackTime > (animLenths[curComboCount] * 0.5f); // 현재시간 - 마지막에 공격한 시간 > 현재 애니메이션의 일정 수치를 지났을 때 가능.
+
+        if (!isAttack) return true;
+
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("WGS_attackA" + curComboCount.ToString()) &&
+            animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5f) return true;
+
+        return false;
+
+        //return (Time.time - lastAttackTime) > (attackDelay); // 현재시간 - 마지막에 공격한 시간 > 현재 애니메이션의 일정 수치를 지났을 때 가능.
     }
 
-    void CheckComboDelay()
-    {   // 공격이 끝났는지 체크하는 함수
-        // 마지막 공격 키가 애니메이션 길이보다 오래됐을 경우 공격이 끝났다고 판단
-        if (isAttack && Time.time - lastAttackTime > animLenths[curComboCount] * 0.9f)
+    void CheckAttackEnd()
+    {   // 공격이 끝나면 마무리 하는 함수
+        if (isAttack &&
+            animator.GetCurrentAnimatorStateInfo(0).IsName("WGS_attackA" + curComboCount.ToString()) &&
+            animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9)
         {
-            //Debug.Log($"{++testCnt}번 작동!");
             curComboCount = defaultComboCnt;
             weapon.UseEnd();
             isAttack = false;
+
+            Debug.Log($"attack End: {animator.GetCurrentAnimatorStateInfo(0)} 작동");
         }
     }
 
-    void UseWeapon()
+    void CheckTime()
     {
-        if(weapon.gameObject.activeSelf) weapon.UseEnd();
-        weapon.Use(status.damage);
+        CheckAttackDelay();
+        CheckAttackEnd();
     }
-
     // ------------------------------------------------
     public void AddItem(string name, int num)
     {
@@ -290,7 +297,7 @@ public class Player : MonoBehaviour, IDamageAble
         {
             nearObject = other.gameObject;
 
-            if (Input.GetButtonDown("Interaction")) anim.SetTrigger("Interaction");
+            if (Input.GetButtonDown("Interaction")) animator.SetTrigger("Interaction");
         }
         else
             scanObject = other.gameObject;
@@ -307,4 +314,6 @@ public class Player : MonoBehaviour, IDamageAble
         Debug.Log("Player가 공격당했다!");
         //status.hp -= Random.Range(status.armor - 3, status.armor + 1);
     }
+
+    public Weapon GetWeapon() { return weapon; }
 }

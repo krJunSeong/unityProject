@@ -14,26 +14,97 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected LineRenderer lineRenderer;
     [SerializeField] protected Collider bodyCollider;
 
-    [SerializeField] protected bool attackAble = false;
+    [SerializeField] protected bool attackAble = false; // 공격가능 무기인가?
+
+    Dictionary<string, int> dicDamagedEneies = new Dictionary<string, int>(); // 맞은 대상들 리스트 Name : 타수
+    int[] comboHitCnts = new int[6];                                          // 각 콤보별 최대 적중수
 
     protected int curCombo = 0;
 
-    public virtual void Use(float dam)
+    private void Awake()
+    {
+        InitSetting();
+    }
+    public virtual void Use(float dam, int curCombo)
     {
         bodyCollider.enabled = true;
         damage = dam;
+
+        if (attackAble)
+        {
+            this.curCombo = curCombo;
+            UpdateDictionaryEnemies();
+        }
     }
     protected virtual void InitSetting() 
     {
         lineRenderer = GetComponent<LineRenderer>();
         bodyCollider = GetComponent<Collider>();
+        Debug.Log("InitSettings");
+
+        // 유니티쟝 콤보 공격 1~5연타 기초.
+        comboHitCnts[1] = 1;
+        comboHitCnts[2] = 1;
+        comboHitCnts[3] = 1;
+        comboHitCnts[4] = 1;
+        comboHitCnts[5] = 3;
     }
 
     public virtual void UseEnd() 
     {
         if(bodyCollider != null) bodyCollider.enabled = false;
+        this.curCombo = 0;
+
+        if (attackAble) ClearDictionaryEnemies();
     }
 
+    protected bool CheckDamagedList(string name)
+    {
+        // 개발자의 의도 외의 다단히트 체크하는 함수. 공격이 가능한 얘라면 true, 아니라면 false 리턴.
+        // 공격하고 무기 딕셔너리에 맞은 애들 넣는 함수
+        // 1. WepaonTrigger로 적과 충돌시 딕셔너리에 해당 이름이 있는지 체크.
+        // 2. 없으면 이름 : 타수 추가
+        // 3. 타수가 0 이상이면 -1 해주고 true 반환
+        // 4. 어택 때마다 딕셔너리에 현재 콤보수에 맞게 타수 추가. = Use함수에서 쓸 것
+        // 5. 콤보가 다 끝나거나 전투상태 종료하면 딕셔너리 내부자료 삭제. = UseEnd(), 혹은 전투상태 종료 체크알고리즘 필요
+        // 6. OnTriggerEnter에서 Damaged 작동하기 위해선 이 함수로 체크하고 쓸 것.
+        if (!attackAble) return false;
+
+        //1.
+        if(!dicDamagedEneies.ContainsKey(name))
+        {
+            //2.
+            dicDamagedEneies[name] = comboHitCnts[curCombo];
+        }
+
+        //3.
+        if (dicDamagedEneies[name] > 0)
+        {
+            dicDamagedEneies[name] -= 1;
+            return true;
+        }
+        else
+            return false;
+    }
+
+    void UpdateDictionaryEnemies()
+    {
+        List<string> keys = new List<string>(dicDamagedEneies.Keys);
+
+        //4. 딕셔너리에 현재 콤보수에 맞게 타수 수정
+        foreach(string i in keys)
+        {
+            dicDamagedEneies[i] = curCombo;
+        }
+    }
+
+    void ClearDictionaryEnemies()
+    {
+        // 5.
+        if(dicDamagedEneies.Count > 0) dicDamagedEneies.Clear();
+    }
+
+    public bool GetBodyCol() { return bodyCollider.enabled; }
     public float GetDelayTime() { return delayTime; }
     public int GetMaxCombo() { return maxCombo; }
 

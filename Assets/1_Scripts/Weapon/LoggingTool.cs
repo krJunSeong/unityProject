@@ -29,7 +29,7 @@ public class LoggingTool : Weapon
         if (attackAble && other.gameObject.tag == "Monster") 
         {
             //if(CheckDamagedList(other.name)) 
-                other.gameObject.GetComponent<IDamageAble>()?.Damaged(damage); 
+                other.gameObject.GetComponent<IDamageAble>()?.Damaged(damage, other.ClosestPoint(transform.position)); 
         }
     }
 }

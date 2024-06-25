@@ -69,6 +69,7 @@ public class AIMonterTrace : MonoBehaviour, IDamageAble
     private void CheckPlayerDistance()
     { 
         // 플레이어와의 거리 측정
+            
         distanceToPlayer = Vector3.Distance(transform.position, GameManager.Instance.GetPlayerPosition());
 
         // 플레이어 감지 범위 내에 있으면 추적 시작
@@ -226,9 +227,12 @@ public class AIMonterTrace : MonoBehaviour, IDamageAble
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5.0f); // 5.0f는 회전 속도 조절용
     }
 
-    public void Damaged(float damage)
+    public void Damaged(float damage, Vector3 position)
     {
-        hp -= Random.Range(armor - 2, armor + 1);
+        float _damage = damage - armor > 0 ? damage - armor : 0;
+
+        FontManager.Instance.ShowDamage(damage, position);
+        hp -= _damage;
         Debug.Log($"test: {++testCnt}, Hp: {hp}");
         if (hp <= 0.0f)
         {

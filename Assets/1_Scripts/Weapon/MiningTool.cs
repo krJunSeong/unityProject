@@ -33,6 +33,6 @@ public class MiningTool : Weapon
             other.gameObject.GetComponent<ILoggingAble>().Used(damage);
         }
 
-        if (attackAble) other.gameObject.GetComponent<IDamageAble>().Damaged(damage);
+        if (attackAble && other.tag == "Monster") other.gameObject.GetComponent<IDamageAble>().Damaged(damage, other.ClosestPoint(transform.position));
     }
 }

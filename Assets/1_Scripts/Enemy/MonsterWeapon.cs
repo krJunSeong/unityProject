@@ -26,7 +26,7 @@ public class MonsterWeapon : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<IDamageAble>()?.Damaged(damage);
+        other.GetComponent<IDamageAble>()?.Damaged(damage, other.ClosestPoint(transform.position));
     }
 
     public void SetDamage(float dam) { damage = dam; }

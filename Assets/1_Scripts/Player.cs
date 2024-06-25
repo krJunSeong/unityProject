@@ -309,7 +309,7 @@ public class Player : MonoBehaviour, IDamageAble
             nearObject = null;
     }
 
-    public void Damaged(float damage)
+    public void Damaged(float damage, Vector3 position)
     {
         Debug.Log("Player가 공격당했다!");
         //status.hp -= Random.Range(status.armor - 3, status.armor + 1);

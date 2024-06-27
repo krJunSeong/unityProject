@@ -276,21 +276,26 @@ public class Player : MonoBehaviour, IDamageAble
         inventory.AddItem(name, num);
     }
 
-    public int GetItemInInventory(string name)
+    public int GetItemInInventory(ItemBase item)
     {
-        return inventory.GetItemInInventory(name);
+        return inventory.GetItemInInventory(item);
     }
 
     // -------------------------------------------------------------------------
     private void OnTriggerEnter(Collider other)
     {
-        
+        if(eDown && other.tag == "Pile")
+        {
+            other.GetComponent<IHarvestsAble>()?.Harvest();
+            other.GetComponent<IPlantSeedAble>()?.PlantSeed(inventory.;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Floor") isJump = false;
     }
+
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Item")

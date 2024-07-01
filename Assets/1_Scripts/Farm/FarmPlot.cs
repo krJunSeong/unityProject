@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class FarmPlot : MonoBehaviour, HarvestAble, PlantAble
+public class FarmPlot : MonoBehaviour, IHarvestsAble, IPlantSeedAble
 {
-    public GameObject tempSeed;
     private Seed currentSeed;
     private Transform seedPos;
     private bool isGrowing;
@@ -10,7 +9,7 @@ public class FarmPlot : MonoBehaviour, HarvestAble, PlantAble
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1)) PlantSeed(tempSeed.GetComponent<Seed>());
+        //if (Input.GetKeyDown(KeyCode.F1)) PlantSeed(tempSeed.GetComponent<Seed>());
 
         if (isGrowing)
         {
@@ -36,7 +35,7 @@ public class FarmPlot : MonoBehaviour, HarvestAble, PlantAble
         growTimer = 0;
 
         // seedPos에 오브젝트를 생성해준다
-        Instantiate(tempSeed, transform.position, Quaternion.identity).transform.SetParent(seedPos);
+        //Instantiate(seed.gameObject, transform.position, Quaternion.identity).transform.SetParent(seedPos);
     }
 
     public void Warter()

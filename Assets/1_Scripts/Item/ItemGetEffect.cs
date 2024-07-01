@@ -45,7 +45,7 @@ public class ItemGetEffect : MonoBehaviour
         dTexts = new Dictionary<string, Text>();
         for(int i = 0; i < texts.Length; i++)
         {
-            // img_Stone = [0] img, [1] Stone
+            // (img_Stone).split -> [0]: img, [1]: Stone
             dTexts[texts[i].name.Split('_')[1]] = texts[i];
         }
     }
@@ -106,7 +106,7 @@ public class ItemGetEffect : MonoBehaviour
             yield return null;
         }
 
-        GameManager.Instance.GiveItemToPlayer(name, 1);
-        dTexts[name].text = GameManager.Instance.GetPlayerInventory(name).ToString();
+        GameManager.Instance.GiveMaterialItemToPlayer(name, 1);
+        dTexts[name].text = GameManager.Instance.GetPlayerInventory(name).ToString(); // 몇 개인지 받는 함수
     }
 }

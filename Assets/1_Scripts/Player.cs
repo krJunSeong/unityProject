@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+
 public struct CharacterState
 {
     public float damage { get; set; }
@@ -37,7 +38,6 @@ public class Player : MonoBehaviour, IDamageAble
     Animator animator;
     Rigidbody rigid;
     PlayerMove playerMove;
-    PlayerAttack playerAttack;
     // -------------Weapon ---------------
     [SerializeField] Weapon weapon;
     [SerializeField] Weapon[] weaponList;
@@ -77,19 +77,7 @@ public class Player : MonoBehaviour, IDamageAble
 
     private void FixedUpdate()
     {
-        Move();
-
-        /* Move 내용
-        transform.position += moveVec3;
-        transform.LookAt(transform.position + moveVec3);
-
-        transform.position += moveVec3 * moveSpeed * Time.deltaTime;
-        moveVec3 = new Vector3(h, 0, v).normalized;
-        rigid.MovePosition(rigid.position + moveVec3 * moveSpeed * Time.deltaTime);
-        
-        if(new Vector3(h,0,v).normalized.magnitude > 0)
-            rigid.MoveRotation(Quaternion.Slerp(rigid.rotation, Quaternion.LookRotation(moveVec3), 0.3f));
-        */
+        //Move();
     }
 
     void Init()
@@ -97,7 +85,6 @@ public class Player : MonoBehaviour, IDamageAble
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
-        playerAttack = GetComponent<PlayerAttack>();
 
         DontDestroyOnLoad(this);
 
@@ -166,11 +153,6 @@ public class Player : MonoBehaviour, IDamageAble
             gameManager.TalkAction(scanObject);
         }
     }
-
-   void ChangeInteraction()
-    {
-        isInteraction = !isInteraction;
-    }
     void ChangeWeapon(int num)
     {
         // 같은 무기를 눌렀으면 무시
@@ -194,8 +176,6 @@ public class Player : MonoBehaviour, IDamageAble
         weapon?.UseEnd();
 
         GetSetting(weapon);
-
-        playerAttack.weapon = this.weapon;
     }
 
     void GetSetting(Weapon weapon)
@@ -208,7 +188,7 @@ public class Player : MonoBehaviour, IDamageAble
     void Attack()
     {
         // Attack 버튼을 누르고 && 어택 딜레이 가능한 시간인지 체크
-        if (Input.GetKeyDown(KeyCode.F) && CheckAttackDelay())
+        if (Input.GetButtonDown("Attack") && CheckAttackDelay())
         {
             AttackExtention();
             //playerAttack.Attack();
@@ -271,23 +251,23 @@ public class Player : MonoBehaviour, IDamageAble
         CheckAttackEnd();
     }
     // ------------------------------------------------
-    public void AddItem(string name, int num)
+    public void AddMaterialItem(string name, int num)
     {
-        inventory.AddItem(name, num);
+        // 건설자재 추가하는 함수 GM -> Player -> Inventory
+        inventory.AddMaterialItem(name, num);
     }
 
-    public int GetItemInInventory(ItemBase item)
+    public int GetItemInInventory(string item)
     {
         return inventory.GetItemInInventory(item);
     }
-
     // -------------------------------------------------------------------------
     private void OnTriggerEnter(Collider other)
     {
         if(eDown && other.tag == "Pile")
         {
             other.GetComponent<IHarvestsAble>()?.Harvest();
-            other.GetComponent<IPlantSeedAble>()?.PlantSeed(inventory.;
+            other.GetComponent<IPlantSeedAble>()?.PlantSeed(null);
         }
     }
 

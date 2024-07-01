@@ -28,7 +28,8 @@ public class Weapon : MonoBehaviour
     public virtual void Use(float dam, int curCombo)
     {
         bodyCollider.enabled = true;
-        damage = dam;
+        
+        if(type == WeaponType.MELEE) damage = dam;
 
         if (attackAble)
         {

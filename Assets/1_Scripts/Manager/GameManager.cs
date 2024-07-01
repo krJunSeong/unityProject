@@ -89,17 +89,16 @@ public class GameManager : MonoBehaviour
         // 오브젝트 이펙트 발생 함수
         itemGetEffet.UseImage(imageName, pos, cnt);
     }
-    public void GiveItemToPlayer(string itemName, int num)
+    public void GiveMaterialItemToPlayer(string itemName, int num)
     {
-        // 플레이어에게 아이템 주는 함수
-        player.GetComponent<Player>().AddItem(itemName, num);
+        // 플레이어에게 건설자재 주는 함수
+        player.GetComponent<Player>().AddMaterialItem(itemName, num);
     }
 
     public int GetPlayerInventory(string itemName)
     {
         //1. inventory 조회, inventory의 key값에 해당하는 값이 있으면 해당값 갖고 와서 텍스트 초기화
         //2. 만약 없다면 Text 0;
-
         return player.GetComponent<Player>().GetItemInInventory(itemName);
     }
 

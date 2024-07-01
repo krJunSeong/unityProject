@@ -12,14 +12,10 @@ public class Tree : MonoBehaviour, ILoggingAble
         state.Init(100.0f, 10.0f, 10.0f, 3.0f);
     }
 
-    private void Update()
-    {
-
-    }
-
     public void Used(float dam)
     {
         state.hp -= dam;
+        Debug.Log($"dam: {dam}");
         if (state.hp <= 0) Dead();
     }
 

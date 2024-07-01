@@ -1,18 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-[System.Serializable]
-public class ItemData
+public class Item : MonoBehaviour
 {
-    public string itemName;
-    public Sprite itmeImage;
-    public string itemDescription;
+    public ItemData itemData;
+    public string Name => itemData.itemName;
+    public string itemName { get {return itemData.itemName; } }
+    public Sprite icon => itemData.itemImage;
+
+    //public Item(ItemData data) => itemData = data;
 }
-public interface IItem
-{
-    string Name { get; }
-    void Use();
-}
-// ScriptableObject:
-//      - 메모리 소모를 줄이는 용도
-//      - 오브젝트가 이 데이터를 참조하는 형식으로 작동한다.

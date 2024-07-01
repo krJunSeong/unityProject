@@ -11,7 +11,7 @@ public class LoggingTool : Weapon
 
     public override void Use(float dam, int curCombo)
     {
-        base.Use(dam, curCombo);
+        base.Use(dam + damage, curCombo);
     }
 
     public override void UseEnd()

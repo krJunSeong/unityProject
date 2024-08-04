@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public Slot[] slots;  // 인벤토리 슬롯 배열
-    public Seed item;     // 인스펙터에서 할당된 Seed 객체
-
+    public Slot[] slots { get; set; }  // 인벤토리 슬롯 배열
+    public Seed[] seeds;
     Dictionary<string, Slot> itemSlotDictionary; // 아이템 이름과 슬롯을 매핑하는 딕셔너리
     Dictionary<string, int> stoneTreeCnt;        // Stone, Tree 재고를 추적하는 딕셔너리
 
@@ -25,23 +24,33 @@ public class Inventory : MonoBehaviour
         {
             slot.ClearSlot();
         }
-
-        Debug.Log($"{item.gameObject.name}");
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.F1))
         {
-            if (item != null)
+            if (seeds != null)
             {
-                AddItem(item, 1);
+                AddItem(seeds[0], 1);
             }
             else
             {
                 Debug.LogError("No Seed item assigned.");
             }
         }
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            if (seeds != null)
+            {
+                AddItem(seeds[1], 1);
+            }
+            else
+            {
+                Debug.LogError("No Seed item assigned.");
+            }
+        }
+
     }
 
     public void AddItem(Item item, int amount)

@@ -94,6 +94,8 @@ public class GameManager : MonoBehaviour
         // 플레이어에게 건설자재 주는 함수
         player.GetComponent<Player>().AddMaterialItem(itemName, num);
     }
+    public Inventory GetPlayerInventory() 
+    {return player.GetComponent<Player>().GetInventory(); }
 
     public int GetPlayerInventory(string itemName)
     {

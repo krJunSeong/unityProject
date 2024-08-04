@@ -4,6 +4,8 @@ public class FarmPlot : MonoBehaviour, IHarvestsAble, IPlantSeedAble
 {
     private Seed currentSeed;
     private Transform seedPos;
+    [SerializeField] GameObject[] fruits;
+
     private bool isGrowing;
     private float growTimer;
 
@@ -22,7 +24,7 @@ public class FarmPlot : MonoBehaviour, IHarvestsAble, IPlantSeedAble
                 growTimer = 0;
                 if (currentSeed.transform.localScale.x >= 0.9)
                 {
-                    Harvest();
+                    //Harvest();
                 }
             }
         }
@@ -33,7 +35,17 @@ public class FarmPlot : MonoBehaviour, IHarvestsAble, IPlantSeedAble
         // 씨앗 심는 코드
         currentSeed = seed;
         growTimer = 0;
+        isGrowing = true;
 
+        // 아래 작물들 중 이름이 맞는 것을 찾아서 넣는다.
+        foreach (var g in fruits)
+        {
+            if (g.name == seed.GetSeedData().fruitsName) 
+            {
+                g.gameObject.SetActive(true); 
+                return; 
+            }
+        }
         // seedPos에 오브젝트를 생성해준다
         //Instantiate(seed.gameObject, transform.position, Quaternion.identity).transform.SetParent(seedPos);
     }
@@ -45,10 +57,10 @@ public class FarmPlot : MonoBehaviour, IHarvestsAble, IPlantSeedAble
     public void Harvest()
     {
         isGrowing = false;
-        Destroy(seedPos.gameObject);
         currentSeed = null;
 
         // 수확 로직 추가 (인벤토리에 아이템 추가 등)
     }
 
+    public bool IsEmpty() { return !isGrowing; }
 }

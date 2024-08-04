@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9111113858654324522}
   - component: {fileID: 1278698401942546840}
   m_Layer: 0
-  m_Name: CarrotSeed
+  m_Name: CornSeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 3154945548576328074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 481, y: 314, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5.287498, y: 4.5164976, z: 3.399999}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -43,5 +43,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 797826e7100c9da4bb83e26e252cba45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: 88138ba183a459b4ab4710d3164ad21f, type: 2}
-  seedData: {fileID: 11400000, guid: 88138ba183a459b4ab4710d3164ad21f, type: 2}
+  itemData: {fileID: 11400000, guid: fe537583ed0848143b54433890bd6127, type: 2}
+  seedData: {fileID: 11400000, guid: fe537583ed0848143b54433890bd6127, type: 2}

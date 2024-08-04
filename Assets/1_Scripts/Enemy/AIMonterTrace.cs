@@ -67,9 +67,10 @@ public class AIMonterTrace : MonoBehaviour, IDamageAble
     }
 
     private void CheckPlayerDistance()
-    { 
+    {
         // 플레이어와의 거리 측정
-            
+        if (GameManager.Instance == null || GameManager.Instance.GetPlayerPosition() == null) { Debug.Log("플레이어 포지션 null"); return; }
+
         distanceToPlayer = Vector3.Distance(transform.position, GameManager.Instance.GetPlayerPosition());
 
         // 플레이어 감지 범위 내에 있으면 추적 시작
@@ -313,7 +314,6 @@ public class AIMonterTrace : MonoBehaviour, IDamageAble
 
     void ReLife()
     {
-        Debug.Log("ReLife 작동");
         isDead = false;
         hp = maxHp;        
         isAttackAble = true;

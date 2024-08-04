@@ -9,6 +9,8 @@ TagManager:
   - Stone
   - Monster
   - Pile
+  - FarmManager
+  - Object
   layers:
   - Default
   - TransparentFX

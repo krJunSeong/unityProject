@@ -44,7 +44,7 @@ public class Player : MonoBehaviour, IDamageAble
 
     public Weapon Weapon => weapon;
     // -------------- Item ----------------
-    Inventory inventory = new Inventory();
+    [SerializeField] Inventory inventory;
 
     // ----------------- combo Attack ----------------------
     float attackDelay = 0.5f;   // 공격 간 딜레이
@@ -62,12 +62,11 @@ public class Player : MonoBehaviour, IDamageAble
     {
         Init();
     }
-
     // Update is called once per frame
     void Update()
     {
         GetInput();
-        Interaction();
+        //Interaction();
         Jump();
         Attack();
         CheckTime();
@@ -85,6 +84,9 @@ public class Player : MonoBehaviour, IDamageAble
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
+        inventory = GameObject.Find("pan_Inventroy")?.GetComponent<Inventory>();
+
+        if (inventory != null) Debug.Log($"[player - inventory] Check");
 
         DontDestroyOnLoad(this);
 
@@ -148,10 +150,8 @@ public class Player : MonoBehaviour, IDamageAble
     }
     void Interaction()
     {
-        if (eDown)
-        {
-            gameManager.TalkAction(scanObject);
-        }
+        // Talk 하는 부분
+        if (eDown)  gameManager.TalkAction(scanObject);
     }
     void ChangeWeapon(int num)
     {
@@ -212,8 +212,6 @@ public class Player : MonoBehaviour, IDamageAble
         lastAttackTime = Time.time;
         isAttack = true;
         isBaatle = true;
-
-        Debug.Log($"{Time.time}: {curComboCount}");
     }
 
     bool CheckAttackDelay()
@@ -240,8 +238,6 @@ public class Player : MonoBehaviour, IDamageAble
             curComboCount = defaultComboCnt;
             weapon.UseEnd();
             isAttack = false;
-
-            Debug.Log($"attack End: {animator.GetCurrentAnimatorStateInfo(0)} 작동");
         }
     }
 
@@ -261,16 +257,28 @@ public class Player : MonoBehaviour, IDamageAble
     {
         return inventory.GetItemInInventory(item);
     }
+
+    public Inventory GetInventory() 
+    {
+        Debug.Log($"[{inventory}] inventory nullptr Cehck");
+        return inventory;
+    }
     // -------------------------------------------------------------------------
     private void OnTriggerEnter(Collider other)
     {
-        if(eDown && other.tag == "Pile")
-        {
-            other.GetComponent<IHarvestsAble>()?.Harvest();
-            other.GetComponent<IPlantSeedAble>()?.PlantSeed(null);
-        }
+        #region "과거 농사부분"
+        //if (eDown && other.tag == "Pile")
+        //{
+        //    other.GetComponent<IHarvestsAble>()?.Harvest();
+        //    other.GetComponent<IPlantSeedAble>()?.PlantSeed(null);
+        //}
+        #endregion
     }
 
+    private void OnCollisionStay(Collision collision)
+    {
+        
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Floor") isJump = false;
@@ -280,7 +288,7 @@ public class Player : MonoBehaviour, IDamageAble
     {
         if (other.gameObject.tag == "Item")
         {
-            nearObject = other.gameObject;
+            //snearObject = other.gameObject;
 
             if (Input.GetButtonDown("Interaction")) animator.SetTrigger("Interaction");
         }

@@ -41,7 +41,6 @@ public class Weapon : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         bodyCollider = GetComponent<Collider>();
-        Debug.Log("InitSettings");
 
         // 유니티쟝 콤보 공격 1~5연타 기초.
         comboHitCnts[1] = 1;

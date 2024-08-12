@@ -34,7 +34,10 @@ public class UIManager : MonoBehaviour
         foreach (var g in uies)
         {
             if (g == null) continue;
-            g.SetActive(false);
+
+            CanvasGroup can = g.GetComponent<CanvasGroup>();
+            if (can != null) can.alpha = 0;
+            else g.SetActive(false);
         }
         foreach(var g in stkCancelUies)
         {

@@ -252,7 +252,10 @@ public class Player : MonoBehaviour, IDamageAble
         // 건설자재 추가하는 함수 GM -> Player -> Inventory
         inventory.AddMaterialItem(name, num);
     }
-
+    public void AddItem(Item _item, int amount)
+    {
+        inventory.AddItem(_item, amount);
+    }
     public int GetItemInInventory(string item)
     {
         return inventory.GetItemInInventory(item);

@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IGrowAble
 {
-    void Grow();
+    public void StartGrow(Seed seed);
+    public IEnumerator Grow();
 }

@@ -11,7 +11,7 @@ public class FarmManager : MonoBehaviour
     [SerializeField] FarmPlot[] farmPlots;    // 심을 땅들
 
     [SerializeField] Dictionary<string, Slot> connectSlot; // 인벤 차감을 위한 슬롯 잇기
-    private int sum = 0; // 씨앗 심을 것이 몇 개인지 세기 위함
+    private int sum = 0;             // 씨앗 심을 것이 몇 개인지 세기 위함
     private int useablePlotsCnt = 0; // 사용가능한 남은 Plot들 개수
 
     private void Awake()
@@ -99,6 +99,8 @@ public class FarmManager : MonoBehaviour
 
     public void DigFarm()
     {
+        connectSlot.Clear();    // 예외처리, 작물 생성 후 다시 결정버튼 누르면 인벤토리 강제 징수 막기
+
         // 예외처리: Plot 개수보다 많으면 예외처리
         sum = 0;
         foreach (var s in farmSlots)
@@ -132,6 +134,8 @@ public class FarmManager : MonoBehaviour
                 GetPlotIsEmpty().PlantSeed((Seed)s.GetItem());
             }
         }
+
+        
     }
     public void OpenSeedInventory()
     {
@@ -185,5 +189,11 @@ public class FarmManager : MonoBehaviour
         }
 
         return tmp;
+    }
+
+    public void CancelBtn()
+    {
+        pan_Farm.SetActive(false);
+        // **필요**: 카메라 플레이어에게 다시 주는 코드 필요!
     }
 }

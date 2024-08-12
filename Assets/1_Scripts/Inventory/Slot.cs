@@ -3,22 +3,24 @@ using UnityEngine.UI;
 
 public class Slot : MonoBehaviour
 {
-    public Image background;
-    public Image itemIcon;
     public Text itemCount;
-
+    [SerializeField] private Image background;
+    [SerializeField] private Image itemIcon;
     [SerializeField] protected Item currentItem;
+
+    private Image originItemIcon;
+    private Sprite originItemIconSprite;
     protected int count;
 
     public bool isSpread = false; // 오브젝트가 비활성화 되면 표시할 건가요?
 
     private void Awake()
     {
-        Debug.Log("Awake called for " + gameObject.name);
-
         background = GetComponent<Image>();
         itemCount = GetComponentInChildren<Text>(true);
         itemIcon = GetComponentsInChildren<Image>(true)[1];
+        originItemIcon = itemIcon;
+        originItemIconSprite = itemIcon.sprite;
     }
 
     private void OnEnable()
@@ -30,10 +32,10 @@ public class Slot : MonoBehaviour
         currentItem = item;
         this.count = count;
 
-        itemIcon.sprite = item.icon;
         itemIcon.gameObject.SetActive(true);
-        itemCount.text = count.ToString();
+        itemIcon.sprite = item.icon;
         itemCount.gameObject.SetActive(true);
+        itemCount.text = count.ToString();
     }
 
     public void ClearSlot()
@@ -48,6 +50,8 @@ public class Slot : MonoBehaviour
     }
     public void AddItemCount(int amount)
     {
+        itemIcon.gameObject.SetActive(true);
+        itemCount.gameObject.SetActive(true);
         count += amount;
         itemCount.text = count.ToString();
     }
@@ -57,7 +61,9 @@ public class Slot : MonoBehaviour
         if (count < 1)
         {
             currentItem = null;
-            itemIcon = null;
+            itemIcon.sprite = null;
+            itemIcon.gameObject.SetActive(false);
+            itemCount.gameObject.SetActive(false);
         }
 
         itemCount.text = amount.ToString();

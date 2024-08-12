@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class FarmPlot : MonoBehaviour, IHarvestsAble, IPlantSeedAble
 {
-    private Seed currentSeed;
     private Transform seedPos;
     [SerializeField] GameObject[] fruits;
+    public GameObject curFrits;
+    public Seed currentSeed;
 
     private bool isGrowing;
     private float growTimer;
@@ -13,21 +14,21 @@ public class FarmPlot : MonoBehaviour, IHarvestsAble, IPlantSeedAble
     {
         //if (Input.GetKeyDown(KeyCode.F1)) PlantSeed(tempSeed.GetComponent<Seed>());
 
-        if (isGrowing)
-        {
-            growTimer += Time.deltaTime;
-            if(growTimer >= currentSeed.growTime / 10)
-            {
-                currentSeed.Grow();
-                // 그로우타임의 1/10 수준이 되면 스케일 Up
-                // currentSeed의 growTime에 도달하면 수확 또는 수확가능 상태
-                growTimer = 0;
-                if (currentSeed.transform.localScale.x >= 0.9)
-                {
-                    //Harvest();
-                }
-            }
-        }
+        //if (isGrowing)
+        //{
+        //    growTimer += Time.deltaTime;
+        //    if(growTimer >= currentSeed.growTime / 10)
+        //    {
+        //        // currentSeed.Grow();
+        //        // 그로우타임의 1/10 수준이 되면 스케일 Up
+        //        // currentSeed의 growTime에 도달하면 수확 또는 수확가능 상태
+        //        growTimer = 0;
+        //        if (currentSeed.transform.localScale.x >= 0.9)
+        //        {
+        //            //Harvest();
+        //        }
+        //    }
+        //}
     }
 
     public void PlantSeed(Seed seed)
@@ -42,7 +43,9 @@ public class FarmPlot : MonoBehaviour, IHarvestsAble, IPlantSeedAble
         {
             if (g.name == seed.GetSeedData().fruitsName) 
             {
-                g.gameObject.SetActive(true); 
+                g.gameObject.SetActive(true);
+                g.GetComponent<Crops>()?.StartGrow(seed);
+                curFrits = g;
                 return; 
             }
         }

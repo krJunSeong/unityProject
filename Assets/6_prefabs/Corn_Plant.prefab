@@ -12,13 +12,14 @@ GameObject:
   - component: {fileID: 33000011398447804}
   - component: {fileID: 23000013704655564}
   - component: {fileID: 64000014201855728}
+  - component: {fileID: 5053625654516314253}
   m_Layer: 0
   m_Name: Corn_Plant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4000011916567678
 Transform:
   m_ObjectHideFlags: 0
@@ -96,3 +97,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300012, guid: fbd33e75d8d4bf9479c9cb59e83a9e37, type: 3}
+--- !u!114 &5053625654516314253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000012844397656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b6cd73500fce244afcb4311bce9684, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  growTime: 0
+  initScale: {x: 0.1, y: 0.1, z: 0.1}
+  resultCropItemName: 
+  isComplete: 0

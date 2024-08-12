@@ -5,7 +5,7 @@ using UnityEngine;
 // ItemData     public string itemName;
 //              public Sprite itmeImage;
 //              public string itemDescription;
-public class Seed : Item, IGrowAble
+public class Seed : Item
 {
     [SerializeField] SeedData seedData;     // ¾¾¾Ñ µ¥ÀÌÅÍ
     public float growTime => seedData.growTime;
@@ -14,8 +14,7 @@ public class Seed : Item, IGrowAble
     private void Strat()
     {
         base.itemData = seedData;
-        transform.localScale = seedData.initSscale;
+        transform.localScale = seedData.initScale;
     }
-    public virtual void Grow() { transform.localScale += (Vector3.one * 0.1f);}
     public SeedData GetSeedData() { return seedData; }
 }

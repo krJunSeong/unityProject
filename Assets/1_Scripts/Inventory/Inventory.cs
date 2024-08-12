@@ -50,7 +50,6 @@ public class Inventory : MonoBehaviour
                 Debug.LogError("No Seed item assigned.");
             }
         }
-
     }
 
     public void AddItem(Item item, int amount)

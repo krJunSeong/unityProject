@@ -263,7 +263,6 @@ public class Player : MonoBehaviour, IDamageAble
 
     public Inventory GetInventory() 
     {
-        Debug.Log($"[{inventory}] inventory nullptr Cehck");
         return inventory;
     }
     // -------------------------------------------------------------------------

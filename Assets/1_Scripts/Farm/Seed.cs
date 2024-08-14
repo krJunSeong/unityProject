@@ -11,10 +11,15 @@ public class Seed : Item
     public float growTime => seedData.growTime;
 
     //public Seed(SeedData data) : base(data) { seedData = data; }
-    private void Strat()
+    //private void Strat()
+    //{
+    //    base.itemData = seedData;
+    //    transform.localScale = seedData.initScale;
+    //}
+
+    public Seed(SeedData _seedData) : base(_seedData)
     {
-        base.itemData = seedData;
-        transform.localScale = seedData.initScale;
+        seedData = _seedData;
     }
     public SeedData GetSeedData() { return seedData; }
 }

@@ -63,6 +63,7 @@ public class FarmManager : MonoBehaviour
             }
         }
         // 3. FarmManager의 슬롯들에 슬롯들을 넣어준다
+        //      connectSlot 배치해주기
         foreach(var playerInventorySlot in playerSeedSlots)
         {
             Slot farmSlot = GetEmptySlot();
@@ -99,7 +100,7 @@ public class FarmManager : MonoBehaviour
 
     public void DigFarm()
     {
-        connectSlot.Clear();    // 예외처리, 작물 생성 후 다시 결정버튼 누르면 인벤토리 강제 징수 막기
+        //connectSlot.Clear();    // 예외처리, 작물 생성 후 다시 결정버튼 누르면 인벤토리 강제 징수 막기
 
         // 예외처리: Plot 개수보다 많으면 예외처리
         sum = 0;
@@ -116,6 +117,7 @@ public class FarmManager : MonoBehaviour
             2. 농작물 심기
                 - plot들에 Seed를 주면, 그 데이터를 이용해서 Plot에서 string을 조사해서 만든다.
         */
+
         foreach (var s in farmSlots) // FarmSlot
         {
             if (!s.gameObject.activeSelf || s.GetItem() == null) continue; // 비어 있으면 스킵
@@ -130,12 +132,10 @@ public class FarmManager : MonoBehaviour
             // 개수만큼 Plot에 진행하기
             for(int i = 0; i < strTemp; i++)
             {
-                // 1. Plots에서 지금 작동중인지 return 해주는 함수 필요.
+                // 빈 Plot에 심어주기
                 GetPlotIsEmpty().PlantSeed((Seed)s.GetItem());
             }
-        }
-
-        
+        }   
     }
     public void OpenSeedInventory()
     {

@@ -28,28 +28,7 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            if (seeds != null)
-            {
-                AddItem(seeds[0], 1);
-            }
-            else
-            {
-                Debug.LogError("No Seed item assigned.");
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            if (seeds != null)
-            {
-                AddItem(seeds[1], 1);
-            }
-            else
-            {
-                Debug.LogError("No Seed item assigned.");
-            }
-        }
+
     }
 
     public void AddItem(Item item, int amount)
